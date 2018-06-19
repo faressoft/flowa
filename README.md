@@ -424,10 +424,10 @@ Execute the flow. The Flowa object can be defined once and executed as many as y
 
 **Returns**: <code>Promise</code> - resolve with the passed context object
 
-| Param   | Type   | Description                                     |
-|---------|--------|-------------------------------------------------|
-| context | Object | A shared object between the tasks (default: {}) |
-| options | Object | (Optional)                                      |
+| Param   | Type   | Description                                                |
+|---------|--------|------------------------------------------------------------|
+| context | Object | A shared object between the tasks (Optional) (default: {}) |
+| options | Object | (Optional)                                                 |
 
 #### Options:
 

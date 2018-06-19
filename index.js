@@ -437,7 +437,7 @@ Flowa.prototype.run = function(context, options) {
         return reject(error);
       }
 
-      resolve(context);
+      resolve(runVariables.context);
       
     });
 
