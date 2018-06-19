@@ -12,7 +12,7 @@
 
 # Hint
 
-Check a [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`.
+Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`.
 
 # Table of Contents  
 
@@ -256,6 +256,8 @@ You can use `Flowa` to make more readable and maintainable `express.js` services
 
 To initilize your web server and load your services.
 
+**Note**: No need to change the code, just add more services at the line 16.
+
 ```js
 var express = require('express');
 var Flowa   = require('./index.js');
@@ -337,8 +339,8 @@ var counter = 0;
 /**
  * Increment the greeting counter
  * 
- * @param  {Object}   context
- * @param  {Function} callback
+ * @param {Object}   context
+ * @param {Function} callback
  */
 function incrementGreetingCounter(context, callback) {
 
@@ -351,8 +353,8 @@ function incrementGreetingCounter(context, callback) {
 /**
  * Generate a greeting message
  * 
- * @param  {Object}   context
- * @param  {Function} callback
+ * @param {Object}   context
+ * @param {Function} callback
  */
 function generateGreetingMessage(context, callback) {
 
