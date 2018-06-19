@@ -16,7 +16,7 @@
     "express.js",
     "route",
     "parallel",
-    "sync"
+    "sync",
     "serial",
     "series",
     "waterfall",
