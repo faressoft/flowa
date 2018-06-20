@@ -7,6 +7,10 @@
     "type": "git",
     "url": "https://github.com/faressoft/flowa.git"
   },
+  "scripts": {
+    "test": "nyc mocha ./test",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
+  },
   "keywords": [
     "control",
     "flow",
@@ -42,5 +46,10 @@
     "async": "^2.6.0",
     "is_js": "^0.9.0",
     "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.1",
+    "mocha": "^5.2.0",
+    "nyc": "^12.0.2"
   }
 }
