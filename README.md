@@ -7,6 +7,7 @@
 [![npm](https://img.shields.io/npm/v/flowa.svg)](https://www.npmjs.com/package/flowa)
 [![npm](https://img.shields.io/npm/l/flowa.svg)](https://github.com/faressoft/flowa/blob/master/LICENSE)
 [![Gitter](https://badges.gitter.im/join_chat.svg)](https://gitter.im/flowa-control-flow/Lobby)
+[![Build Status](https://travis-ci.org/faressoft/flowa.svg?branch=master)](https://travis-ci.org/faressoft/flowa)
 
 > Flow control for Node.js
 
