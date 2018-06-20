@@ -8,7 +8,7 @@
     "url": "https://github.com/faressoft/flowa.git"
   },
   "scripts": {
-    "test": "nyc mocha ./test",
+    "test": "nyc --reporter=text mocha ./test",
     "coverage": "nyc --reporter=html npm test && open coverage/index.html",
     "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
