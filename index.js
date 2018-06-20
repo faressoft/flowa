@@ -8,7 +8,6 @@
 var is       = require('is_js'),
     async    = require('async'),
     _        = require('lodash');
-
 var series   = require('./series'),
     parallel = require('./parallel');
 
