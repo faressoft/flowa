@@ -9,7 +9,8 @@
   },
   "scripts": {
     "test": "nyc mocha ./test",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc --reporter=html npm test && open coverage/index.html",
+    "coveralls": "nyc report --reporter=text-lcov | coveralls"
   },
   "keywords": [
     "control",

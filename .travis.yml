@@ -1,4 +1,5 @@
 language: node_js
+
 node_js:
   - "4"
   - "5"
@@ -8,6 +9,9 @@ node_js:
   - "9"
   - "10"
   - "node"
+
+after_success: npm run coveralls
+
 branches:
   only:
     - master
