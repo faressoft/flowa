@@ -4,11 +4,10 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var expect   = require('chai').expect,
-    deepcopy = require('deepcopy'),
-    sinon    = require('sinon');
-var Flowa    = require('../index.js'),
-    flow     = require('./flows/flow.js');
+var expect = require('chai').expect,
+    sinon  = require('sinon');
+var Flowa  = require('../index.js'),
+    flow   = require('./flows/flow.js');
 
 before(function () {
   clock = sinon.useFakeTimers();
