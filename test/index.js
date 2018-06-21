@@ -4,17 +4,24 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var expect                 = require('chai').expect,
-    deepcopy               = require('deepcopy');
-var Flowa                  = require('../index.js'),
-    nestedFlow             = require('./flows/nested.js'),
-    simpleWithoutTypesFlow = require('./flows/simple_without_types.js');
-    nestedWithoutTypesFlow = require('./flows/nested_without_types.js');
+var expect   = require('chai').expect,
+    deepcopy = require('deepcopy'),
+    sinon    = require('sinon');
+var Flowa    = require('../index.js'),
+    flow     = require('./flows/flow.js');
+
+before(function () {
+  clock = sinon.useFakeTimers();
+});
+
+after(function () {
+  clock.restore();
+});
 
 describe('Properties', function() {
 
-  var flowa = new Flowa(nestedFlow);
-  var flowaWithName = new Flowa(nestedWithoutTypesFlow, 'ping');
+  var flowa = new Flowa(flow);
+  var flowaWithName = new Flowa(flow, 'ping');
 
   describe('name', function() {
 
@@ -36,7 +43,7 @@ describe('Properties', function() {
 
     it('Should be a reference to the passed flow', function() {
 
-      expect(flowa._root).to.be.equal(nestedFlow);
+      expect(flowa._root).to.be.equal(flow);
 
     });
     
@@ -47,22 +54,22 @@ describe('Properties', function() {
     it('Should index tasks by their names', function() {
 
       expect(flowa._tasks).to.be.an('object').and.deep.equal({
-        group1: nestedFlow.group1,
-        group2: nestedFlow.group1.group2,
-        group3: nestedFlow.group1.group3,
-        group4: nestedFlow.group1.group3.group4,
-        task1: nestedFlow.task1,
-        task2: nestedFlow.group1.task2,
-        task3: nestedFlow.group1.task3,
-        task4: nestedFlow.group1.group2.task4,
-        task5: nestedFlow.group1.group2.task5,
-        task6: nestedFlow.group1.group3.task6,
-        task7: nestedFlow.group1.group3.task7,
-        task8: nestedFlow.group1.group3.group4.task8,
-        task9: nestedFlow.group1.group3.group4.task9,
-        task10: nestedFlow.group1.group3.task10,
-        task11: nestedFlow.task11,
-        task12: nestedFlow.task12,
+        group1: flow.group1,
+        group2: flow.group1.group2,
+        group3: flow.group1.group3,
+        group4: flow.group1.group3.group4,
+        task1: flow.task1,
+        task2: flow.group1.task2,
+        task3: flow.group1.task3,
+        task4: flow.group1.group2.task4,
+        task5: flow.group1.group2.task5,
+        task6: flow.group1.group3.task6,
+        task7: flow.group1.group3.task7,
+        task8: flow.group1.group3.group4.task8,
+        task9: flow.group1.group3.group4.task9,
+        task10: flow.group1.group3.task10,
+        task11: flow.task11,
+        task12: flow.task12,
       });
 
     });
@@ -172,65 +179,19 @@ describe('Properties', function() {
   
 });
 
-describe('Methods', function(callback) {
+describe('Methods', function() {
   
-  describe('_setDefaultType()', function() {
+  describe('run()', function() {
 
-    var simpleFlow = deepcopy(simpleWithoutTypesFlow);
-    var simpleFlowParallell = deepcopy(simpleWithoutTypesFlow);
-    var nestedFlow = deepcopy(nestedWithoutTypesFlow);
+    var flowa = new Flowa(flow, 'ping');
 
-    simpleFlowParallell.type = 'parallel';
-    nestedFlow.group1.type = 'parallel';
-
-    var simpleFlowa = new Flowa(simpleFlow);
-    var simpleFlowaParallel = new Flowa(simpleFlowParallell);
-    var nestedFlowa = new Flowa(nestedFlow);
-
-    it('Should not set the default type if the type is already set', function() {
-
-      expect(simpleFlowaParallel._tasksRunnersTypes).to.be.an('object').and.deep.equal({
-        task1: 'parallel',
-        task2: 'parallel',
-        task3: 'parallel'
-      });
-
-    });
-    
-    it('Should set the default type for a flow with no nested tasks if not set', function() {
-
-      expect(simpleFlowa._tasksRunnersTypes).to.be.an('object').and.deep.equal({
-        task1: 'series',
-        task2: 'series',
-        task3: 'series'
-      });
-
-    });
-    
-    it('Should set the default type for all nested tasks if not set', function() {
-
-      expect(nestedFlowa._tasksRunnersTypes).to.be.an('object').and.deep.equal({
-        group1: 'series',
-        group2: 'parallel',
-        group3: 'parallel',
-        group4: 'series',
-        task1: 'series',
-        task2: 'parallel',
-        task3: 'parallel',
-        task4: 'series',
-        task5: 'series',
-        task6: 'series',
-        task7: 'series',
-        task8: 'series',
-        task9: 'series',
-        task10: 'series',
-        task11: 'series',
-        task12: 'series'
-      });
+    it('Should return a promise', function() {
+      
+      var context = {testing: true};
+      expect(flowa.run(context)).to.be.a('promise');
 
     });
     
   });
 
 });
-

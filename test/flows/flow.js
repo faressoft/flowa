@@ -83,16 +83,22 @@ function task12(context, callback) {
 }
 
 module.exports = {
+
+  type: 'series',
   
   task1: task1,
 
   group1: {
+
+    type: 'parallel',
 
     task2: task2,
 
     task3: task3,
 
     group2: {
+
+      type: 'series',
 
       task4: task4,
 
@@ -107,6 +113,8 @@ module.exports = {
       task7: task7,
 
       group4: {
+
+        type: 'parallel',
 
         task8: task8,
 
