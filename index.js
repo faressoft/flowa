@@ -290,7 +290,7 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
     this._log(taskName);
   }
 
-  // Is a single task
+  // Is a compound task
   if (self._isCompoundTask(taskName)) {
 
     // Invalid runner type
@@ -302,7 +302,15 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
 
   }
 
-  self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
+  try {
+
+    self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
+
+  } catch (error) {
+
+    callback(error);
+
+  }
 
 };
 
@@ -385,16 +393,8 @@ Flowa.prototype._timeout = function(asyncFunction, timeout, runVariables, taskNa
 
     }, timeout);
 
-    try {
-
-      // Execute the function
-      asyncFunction.apply(null, args);
-
-    } catch (error) {
-
-      callbackWrapper(error);
-
-    }
+    // Execute the function
+    asyncFunction.apply(null, args);
 
   };
 
