@@ -229,22 +229,22 @@ var flowa = new Flowa({
   // Runner type
   type: 'series',
   
-  // Do task1
+  // Shorthand format for task1: task1
   task1,
 
-  // Do task2
+  // Shorthand format for task2:task2
   task2,
 
-  // Do task3
+  // Shorthand format for task3:task3
   task3,
 
-  // Do task4
+  // Shorthand format for task4:task4
   task4,
 
-  // Do task5
+  // Shorthand format for task5:task5
   task5,
 
-  // Do task6
+  // Shorthand format for task6:task6
   task6
 
 });
