@@ -264,6 +264,10 @@ Flowa.prototype._debugTask = function(taskName, debugCallback) {
 
 /**
  * Execute a task
+ *
+ * - If the task returns a promise: The callback will
+ *   be called manually with the resolved with value
+ *   or the rejected with error.
  * 
  * @param {String}   taskName
  * @param {Object}   runVariables
@@ -274,6 +278,7 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   var self = this;
   var task = self._tasks[taskName];
   var timeout = runVariables.options.taskTimeout;
+  var returnedValue = null;
 
   // Debugging is on
   if (runVariables.options.debug) {
@@ -289,11 +294,19 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
 
   try {
 
-    self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
+    returnedValue = self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
 
   } catch (error) {
 
     callback(error);
+
+  }
+
+  // Does it return a promise
+  if (returnedValue instanceof Promise) {
+
+    returnedValue.then(callback.bind(null, null));
+    returnedValue.catch(callback.bind(null));
 
   }
 
