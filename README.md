@@ -23,6 +23,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 * [Installation](#installation)
 * [Usage](#usage)
   * [Mixed Runners Types](#mixed-runners-types)
+  * [Promises](#promises)
   * [Jumping Between Tasks](#jumping-between-tasks)
   * [Error Handling](#error-handling)
   * [ES6 Coding Style](#es6-coding-style)
@@ -161,13 +162,43 @@ var flowa = new Flowa({
 });
 ```
 
+### Promises
+
+You can return promises from your tasks instead of using callbacks. The callbacks will be called internally.
+
+```js
+function task1(context, callback) {
+
+  return new Promise(function(resolve, reject) {
+
+    resolve();
+
+  });
+
+}
+```
+
 ### Jumping Between Tasks
 
-You can jump forward and backward between tasks that belong to the same parent task and the runner type is series by passing the name of the task as the second argument to the callback function that is passed to each task. You can jump into a compound task too.
+You can jump forward and backward between tasks that belong to the same parent task and the runner type is `series` by passing the name of the task as the second argument to the callback function or as a resolved value if you use promises instead. You can jump into a compound task too.
 
 ```js
 function task1(context, callback) {
   callback(null, 'task6');
+}
+```
+
+Or with promises
+
+```js
+function task1(context, callback) {
+
+  return new Promise(function(resolve, reject) {
+
+    resolve('task6');
+
+  });
+
 }
 ```
 
