@@ -199,18 +199,6 @@ Flowa.prototype._isSingleTask = function(taskName) {
 };
 
 /**
- * Get the runner type for a specific task
- *
- * @param  {String}  taskName
- * @return {String}
- */
-Flowa.prototype._getTaskRunnerType = function(taskName) {
-
-  return this._tasksRunnersTypes[taskName];
-  
-};
-
-/**
  * Get the parent task name for a specific task
  *
  * @param  {String}        taskName
