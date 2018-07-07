@@ -438,6 +438,7 @@ Execute the flow. The Flowa object can be defined once and executed as many as y
 * **timeout**: a timeout for the flow in milliseconds. The promise will be rejected with an error object that has (code: `ETIMEDOUT`) if the timeout is exeeded (type: `Number`).
 * **taskTimeout**: a timeout for the single tasks in milliseconds. The promise will be rejected with an error object that has (code: `ETIMEDOUT`) if the timeout is exeeded (type: `Number`).
 * **debug**: log the tasks' names in realtime (type: `Boolean`).
+* **debugCallback**: the debug logging function (type: `Boolean`) (default: `console.log`).
 
 # License
 
