@@ -144,3 +144,24 @@ module.exports.hints.context = {
   task3: true,
   task4: true
 };
+
+/**
+ * The state of the context object in each event loop tick
+ * @type {Array}
+ */
+module.exports.hints.timeline = [
+  {},
+  {task1: true, task2: true, task3: true, task4: true}
+];
+
+/**
+ * The debug logs for each executed task
+ * ordered as per the execution order
+ * @type {Array}
+ */
+module.exports.hints.debugLogs = [
+  'task1',
+  '..task2',
+  '......task3',
+  '........task4'
+];

@@ -17,31 +17,35 @@ var expect = chai.expect;
 module.exports = function(sample) {
 
   var flowa = new Flowa(sample.flow, 'ping');
+  var flowaWithoutName = new Flowa(sample.flow);
   var runResult = null;
+  var runResultWithoutName = null;
   var clock = null;
 
-  before(function() {
-
-    clock = sinon.useFakeTimers();
-
-  });
-
-  after(function() {
-
-    clock.restore();
-
-  });
-  
   describe('Timeout', function() {
 
+    before(function() {
+
+      clock = sinon.useFakeTimers();
+
+    });
+
+    after(function() {
+
+      clock.restore();
+
+    });
+    
     describe('Flow Timeout Exeeded', function() {
       
       before(function() {
 
         runResult = flowa.run({}, {timeout: sample.hints.flowExecutionTime - 1});
+        runResultWithoutName = flowaWithoutName.run({}, {timeout: sample.hints.flowExecutionTime - 1});
 
         // To (unhandled promise rejection) prevent warnings
         runResult.catch(noop);
+        runResultWithoutName.catch(noop);
 
         clock.tick(sample.hints.flowExecutionTime - 1);
         
@@ -62,6 +66,12 @@ module.exports = function(sample) {
       it('Should be rejected with an Error object with the message "Timeout exeeded for `ping`"', function() {
 
         return expect(runResult).to.be.rejectedWith(Error, 'Timeout exeeded for `ping`');
+
+      });
+
+      it('Should be rejected with an Error object with the message "Timeout exeeded" if no flow name', function() {
+
+        return expect(runResultWithoutName).to.be.rejectedWith(Error, 'Timeout exeeded');
 
       });
 
@@ -104,9 +114,11 @@ module.exports = function(sample) {
       before(function() {
 
         runResult = flowa.run({}, {taskTimeout: sample.hints.taskExecutionTime - 1});
+        runResultWithoutName = flowaWithoutName.run({}, {taskTimeout: sample.hints.taskExecutionTime - 1});
 
         // To (unhandled promise rejection) prevent warnings
         runResult.catch(noop);
+        runResultWithoutName.catch(noop);
 
         clock.tick(sample.hints.taskExecutionTime);
         
@@ -127,6 +139,12 @@ module.exports = function(sample) {
       it('Should be rejected with an Error object with the message "Timeout exeeded for `ping`.`task1`"', function() {
 
         return expect(runResult).to.be.rejectedWith(Error, 'Timeout exeeded for `ping`.`task1`');
+
+      });
+
+      it('Should be rejected with an Error object with the message "Timeout exeeded for `task1`" if no flow name', function() {
+
+        return expect(runResultWithoutName).to.be.rejectedWith(Error, 'Timeout exeeded for `task1`');
 
       });
 

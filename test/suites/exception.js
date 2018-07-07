@@ -19,16 +19,16 @@ module.exports = function(sample) {
   var flowa = new Flowa(sample.flow, 'ping');
   var runResult = null;
 
-  before(function() {
-
-    runResult = flowa.run();
-
-    // To (unhandled promise rejection) prevent warnings
-    runResult.catch(noop);
-
-  });
-
   describe('Error Handling', function() {
+
+    before(function() {
+
+      runResult = flowa.run();
+
+      // To (unhandled promise rejection) prevent warnings
+      runResult.catch(noop);
+
+    });
 
     it('Should be rejected', function() {
       
@@ -36,9 +36,21 @@ module.exports = function(sample) {
 
     });
 
-    it('Should be rejected with the thrown exception', function() {
+    it('Should be rejected with the same thrown error object', function() {
       
-      return expect(runResult).to.be.rejectedWith(sample.hints.error);
+      // the error hint is defined
+      if (typeof sample.hints.error !== 'unhandled') {
+        return expect(runResult).to.be.rejectedWith(sample.hints.error);
+      }
+
+    });
+
+    it('Should be rejected with the same thrown error message', function() {
+      
+      // The errorMessage hint is defined
+      if (typeof sample.hints.errorMessage !== 'unhandled') {
+        return expect(runResult).to.be.rejectedWith(Error, sample.hints.errorMessage);
+      }
 
     });
 

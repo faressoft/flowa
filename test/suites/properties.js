@@ -1,5 +1,5 @@
 /**
- * Tests for internal properties
+ * Tests for essential internal properties
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */

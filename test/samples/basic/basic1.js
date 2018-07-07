@@ -196,5 +196,40 @@ module.exports.hints.context = {
   task9: true,
   task10: true,
   task11: true,
-  task12  : true
+  task12: true
 };
+
+/**
+ * The state of the context object in each event loop tick
+ * @type {Array}
+ */
+module.exports.hints.timeline = [
+  {},
+  {task1: true},
+  {task2: true, task3: true, task4: true, task6: true},
+  {task5: true, task7: true},
+  {task8: true, task9: true},
+  {task10: true},
+  {task11: true},
+  {task12: true}
+];
+
+/**
+ * The debug logs for each executed task
+ * ordered as per the execution order
+ * @type {Array}
+ */
+module.exports.hints.debugLogs = [
+  'task1',
+  '..task2',
+  '..task3',
+  '....task4',
+  '....task6',
+  '....task5',
+  '....task7',
+  '......task8',
+  '......task9',
+  '....task10',
+  'task11',
+  'task12'
+];
