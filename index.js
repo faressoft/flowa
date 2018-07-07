@@ -213,17 +213,12 @@ Flowa.prototype._getTaskParent = function(taskName) {
 /**
  * Iterate through child tasks for a specific parent task
  * 
- * @param  {String}   taskName
- * @param  {Function} callback called with (task, taskName)
+ * @param {String}   taskName
+ * @param {Function} callback called with (task, taskName)
  */
 Flowa.prototype.forEachTask = function(taskName, callback) {
 
   var self = this;
-
-  // Not a compound task
-  if (!this._isCompoundTask(taskName)) {
-    return;
-  }
 
   // Foreach sub task
   _.forIn(this._tasks[taskName], function(task, taskName) {
