@@ -3,6 +3,8 @@
   "version": "1.0.2",
   "description": "Flow control for Node.js",
   "main": "index.js",
+  "author": "Mohammad Fares <faressoft.com@gmail.com>",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/faressoft/flowa.git"
@@ -41,8 +43,9 @@
     "jump",
     "debug"
   ],
-  "author": "Mohammad Fares <faressoft.com@gmail.com>",
-  "license": "MIT",
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "dependencies": {
     "async": "^2.6.0",
     "is_js": "^0.9.0",
