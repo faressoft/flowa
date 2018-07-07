@@ -142,6 +142,11 @@ Flowa.prototype._indexTasks = function(task, taskName, runnerType, depth, parent
     throw new Error('The task ' + taskName + ' is duplicated. Tasks names should be unique');
   }
 
+  // Invalid runner type
+  if (is.not.propertyDefined(this._runners, runnerType)) {
+    throw new Error('The type ' + runnerType + ' is not a valid runner type');
+  }
+
   this._tasks[taskName] = task;
   this._tasksDepths[taskName] = depth;
   this._tasksParents[taskName] = parentTaskName;
@@ -292,11 +297,6 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
 
   // Is a compound task
   if (self._isCompoundTask(taskName)) {
-
-    // Invalid runner type
-    if (is.not.propertyDefined(self._runners, task.type)) {
-      throw new Error('The type ' + task.type + ' is not a valid runner type');
-    }
 
     return self._runners[task.type](self, taskName, runVariables, callback);
 
