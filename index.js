@@ -235,11 +235,18 @@ Flowa.prototype.forEachTask = function(taskName, callback) {
 };
 
 /**
- * Log a specific task
+ * Debug a specific task
+ *
+ * Calls the `debugCallback` with one string
+ * argument in the format: `..TaskName`.
+ *
+ * Where `..` is repeated n times based on
+ * the depth of the task.
  * 
- * @param {String} taskName
+ * @param {String}   taskName
+ * @param {Function} debugCallback
  */
-Flowa.prototype._log = function(taskName) {
+Flowa.prototype._debugTask = function(taskName, debugCallback) {
 
   // Is the root task
   if (taskName == this._rootName) {
@@ -251,7 +258,7 @@ Flowa.prototype._log = function(taskName) {
     return;
   }
 
-  console.log(_.repeat('..', this._tasksDepths[taskName] - 1) + taskName);
+  debugCallback(_.repeat('..', this._tasksDepths[taskName] - 1) + taskName);
   
 };
 
@@ -268,14 +275,9 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   var task = self._tasks[taskName];
   var timeout = runVariables.options.taskTimeout;
 
-  // Timeout is exeeded
-  if (runVariables.timedout) {
-    return;
-  }
-
   // Debugging is on
   if (runVariables.options.debug) {
-    this._log(taskName);
+    this._debugTask(taskName, runVariables.options.debugCallback);
   }
 
   // Is a compound task
@@ -405,7 +407,8 @@ Flowa.prototype.run = function(context, options) {
   _.defaults(runVariables.options, {
     timeout: null,
     taskTimeout: null,
-    debug: false
+    debug: false,
+    debugCallback: console.log
   });
 
   return new Promise(function(resolve, reject) {
