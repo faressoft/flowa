@@ -167,7 +167,7 @@ var flowa = new Flowa({
 You can return promises from your tasks instead of using callbacks. The callbacks will be called internally.
 
 ```js
-function task1(context, callback) {
+function task1(context) {
 
   return new Promise(function(resolve, reject) {
 
@@ -191,7 +191,7 @@ function task1(context, callback) {
 Or with promises
 
 ```js
-function task1(context, callback) {
+function task1(context) {
 
   return new Promise(function(resolve, reject) {
 
