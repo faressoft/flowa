@@ -1,5 +1,5 @@
 /**
- * Flow with backward jumping
+ * Flow with backward jumping and promises
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
@@ -7,19 +7,26 @@
 /**
  * Generate a dummy task that adds
  * a key `task${id}_${callsCounter}` = `true` into the context
- * and calls its callback on the next event loop tick
- * using `setImmediate`
+ * and returns a promise that gets resolved on the
+ * next event loop tick using `setImmediate`
  * 
  * @param  {Number}   id
  * @return {Function}
  */
-function generateDummyTask(id) {
+function generateDummyPromiseTask(id) {
 
   var callsCounter = 1;
   
-  return function(context, callback) {
+  return function(context) {
+
     context['task' + id + '_' + callsCounter++] = true;
-    setImmediate(callback);
+
+    return new Promise(function(resolve, reject) {
+      
+      setImmediate(resolve);
+
+    });
+
   };
 
 }
@@ -27,7 +34,7 @@ function generateDummyTask(id) {
 /**
  * Generate a dummy task that adds
  * a key `task${id}_${callsCounter}` = `true` into the context
- * and calls its callback on the next event loop tick
+ * and returns a promise that gets resolved on the next event loop tick
  * using `setImmediate` with the arguments (null, jumpToTask)
  * when it's called for the first time, otherwise without jumping
  * 
@@ -35,21 +42,26 @@ function generateDummyTask(id) {
  * @param  {String}   jumpToTask
  * @return {Function}
  */
-function generateJumperTask(id, jumpToTask) {
+function generateJumperPromiseTask(id, jumpToTask) {
 
   var called = false;
   var callsCounter = 1;
 
-  return function(context, callback) {
+  return function(context) {
 
     context['task' + id + '_' + callsCounter++] = true;
 
-    if (!called) {
-      called = true;
-      return setImmediate(callback.bind(null, null, jumpToTask));
-    }
+    return new Promise(function(resolve, reject) {
 
-    setImmediate(callback);
+      if (!called) {
+        called = true;
+        return setImmediate(resolve.bind(null, jumpToTask));
+      }
+
+      setImmediate(resolve);
+
+    });
+
 
   };
 
@@ -63,51 +75,51 @@ module.exports.flow = {
 
   type: 'series',
   
-  task1: generateDummyTask(1),
+  task1: generateDummyPromiseTask(1),
 
   group1: {
 
     type: 'parallel',
 
-    task2: generateDummyTask(2),
+    task2: generateDummyPromiseTask(2),
 
-    task3: generateDummyTask(3),
+    task3: generateDummyPromiseTask(3),
 
     group2: {
 
       type: 'series',
 
-      task4: generateDummyTask(4),
+      task4: generateDummyPromiseTask(4),
 
-      task5: generateDummyTask(5)
+      task5: generateDummyPromiseTask(5)
 
     },
 
     group3: {
 
-      task6: generateDummyTask(6),
+      task6: generateDummyPromiseTask(6),
 
-      task7: generateDummyTask(7),
+      task7: generateDummyPromiseTask(7),
 
       group4: {
 
         type: 'parallel',
 
-        task8: generateDummyTask(8),
+        task8: generateDummyPromiseTask(8),
 
-        task9: generateDummyTask(9)
+        task9: generateDummyPromiseTask(9)
 
       },
 
-      task10: generateDummyTask(10)
+      task10: generateDummyPromiseTask(10)
 
     }
 
   },
 
-  task11: generateJumperTask(11, 'task1'),
+  task11: generateJumperPromiseTask(11, 'task1'),
 
-  task12: generateDummyTask(12)
+  task12: generateDummyPromiseTask(12)
 
 };
 

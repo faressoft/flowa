@@ -41,12 +41,26 @@ describe('Sample: Basic/Basic5', function(callback) {
   suites.flow(samples.basic.basic5);
 });
 
+describe('Sample: Basic/Basic6', function(callback) {
+  suites.properties(samples.basic.basic6);
+  suites.output(samples.basic.basic6);
+  suites.flow(samples.basic.basic6);
+});
+
 describe('Sample: Jump/Jump1', function(callback) {
   suites.flow(samples.jump.jump1);
 });
 
 describe('Sample: Jump/Jump2', function(callback) {
   suites.flow(samples.jump.jump2);
+});
+
+describe('Sample: Jump/Jump3', function(callback) {
+  suites.flow(samples.jump.jump3);
+});
+
+describe('Sample: Jump/Jump4', function(callback) {
+  suites.flow(samples.jump.jump4);
 });
 
 describe('Sample: Timeout/Timeout1', function(callback) {
@@ -71,6 +85,10 @@ describe('Sample: Exception/Exception3', function(callback) {
 
 describe('Sample: Exception/Exception4', function(callback) {
   suites.exception(samples.exception.exception4);
+});
+
+describe('Sample: Exception/Exception5', function(callback) {
+  suites.exception(samples.exception.exception5);
 });
 
 describe('Sample: Exception/JUMP_Exception1', function(callback) {

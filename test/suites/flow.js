@@ -60,7 +60,7 @@ module.exports = function(sample) {
     });
 
     describe('Execution Timeline', function() {
-      
+
       // Foreach tick in the expected timeline
       sample.hints.timeline.forEach(function(expectedContextState, index) {
 
