@@ -54,9 +54,8 @@
     "coveralls": "^3.0.1",
     "mocha": "^5.2.0",
     "nyc": "^11.9.0",
-    "require-directory": "^2.1.1",
+    "require-dir": "^1.0.0",
     "sinon": "^6.1.0",
-    "ticks-tracer": "^1.1.0",
-    "require-dir": "^1.0.0"
+    "ticks-tracer": "^1.1.1"
   }
 }
