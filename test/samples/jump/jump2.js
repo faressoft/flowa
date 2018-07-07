@@ -5,113 +5,6 @@
  */
 
 /**
- * Generate a dummy task that adds
- * a key `task${id}_${callsCounter}` = `true` into the context
- * and calls its callback on the next event loop tick
- * using `setImmediate`
- * 
- * @param  {Number}   id
- * @return {Function}
- */
-function generateDummyTask(id) {
-
-  var callsCounter = 1;
-  
-  return function(context, callback) {
-    context['task' + id + '_' + callsCounter++] = true;
-    setImmediate(callback);
-  };
-
-}
-
-/**
- * Generate a dummy task that adds
- * a key `task${id}_${callsCounter}` = `true` into the context
- * and calls its callback on the next event loop tick
- * using `setImmediate` with the arguments (null, jumpToTask)
- * when it's called for the first time, otherwise without jumping
- * 
- * @param  {Number}   id
- * @param  {String}   jumpToTask
- * @return {Function}
- */
-function generateJumperTask(id, jumpToTask) {
-
-  var called = false;
-  var callsCounter = 1;
-
-  return function(context, callback) {
-
-    context['task' + id + '_' + callsCounter++] = true;
-
-    if (!called) {
-      called = true;
-      return setImmediate(callback.bind(null, null, jumpToTask));
-    }
-
-    setImmediate(callback);
-
-  };
-
-}
-
-/**
- * The flow sample
- * @type {Object}
- */
-module.exports.flow = {
-
-  type: 'series',
-  
-  task1: generateDummyTask(1),
-
-  group1: {
-
-    type: 'parallel',
-
-    task2: generateDummyTask(2),
-
-    task3: generateDummyTask(3),
-
-    group2: {
-
-      type: 'series',
-
-      task4: generateDummyTask(4),
-
-      task5: generateDummyTask(5)
-
-    },
-
-    group3: {
-
-      task6: generateDummyTask(6),
-
-      task7: generateDummyTask(7),
-
-      group4: {
-
-        type: 'parallel',
-
-        task8: generateDummyTask(8),
-
-        task9: generateDummyTask(9)
-
-      },
-
-      task10: generateDummyTask(10)
-
-    }
-
-  },
-
-  task11: generateJumperTask(11, 'task1'),
-
-  task12: generateDummyTask(12)
-
-};
-
-/**
  * Hints for the testing suites
  * @type {Object}
  */
@@ -123,19 +16,19 @@ module.exports.hints = {};
  */
 module.exports.hints.timeline = [
   {},
-  {task1_1: true},
-  {task2_1: true, task3_1: true, task4_1: true, task6_1: true},
-  {task5_1: true, task7_1: true},
-  {task8_1: true, task9_1: true},
-  {task10_1: true},
-  {task11_1: true},
-  {task1_2: true},
-  {task2_2: true, task3_2: true, task4_2: true, task6_2: true},
-  {task5_2: true, task7_2: true},
-  {task8_2: true, task9_2: true},
-  {task10_2: true},
-  {task11_2: true},
-  {task12_1: true}
+  {task1: 1},
+  {task2: 1, task3: 1, task4: 1, task6: 1},
+  {task5: 1, task7: 1},
+  {task8: 1, task9: 1},
+  {task10: 1},
+  {task11: 1},
+  {task1: 2},
+  {task2: 2, task3: 2, task4: 2, task6: 2},
+  {task5: 2, task7: 2},
+  {task8: 2, task9: 2},
+  {task10: 2},
+  {task11: 2},
+  {task12: 1}
 ];
 
 /**
@@ -168,3 +61,59 @@ module.exports.hints.debugLogs = [
   'task11',
   'task12'
 ];
+
+/**
+ * The flow sample
+ * @type {Object}
+ */
+module.exports.flow = {
+
+  type: 'series',
+  
+  task1: generators.generateDummyTask(1),
+
+  group1: {
+
+    type: 'parallel',
+
+    task2: generators.generateDummyTask(2),
+
+    task3: generators.generateDummyTask(3),
+
+    group2: {
+
+      type: 'series',
+
+      task4: generators.generateDummyTask(4),
+
+      task5: generators.generateDummyTask(5)
+
+    },
+
+    group3: {
+
+      task6: generators.generateDummyTask(6),
+
+      task7: generators.generateDummyTask(7),
+
+      group4: {
+
+        type: 'parallel',
+
+        task8: generators.generateDummyTask(8),
+
+        task9: generators.generateDummyTask(9)
+
+      },
+
+      task10: generators.generateDummyTask(10)
+
+    }
+
+  },
+
+  task11: generators.generateJumperTask(11, 'task1'),
+
+  task12: generators.generateDummyTask(12)
+
+};

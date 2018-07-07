@@ -5,86 +5,10 @@
  */
 
 /**
- * Generate a dummy task that adds
- * a key `task${id}` = `true` into the context
- * and calls its callback on the next event loop tick
- * using `setImmediate`
- * 
- * @param  {Number}   id
- * @return {Function}
- */
-function generateDummyTask(id) {
-  
-  return function(context, callback) {
-    context['task' + id] = true;
-    setImmediate(callback);
-  };
-
-}
-
-/**
- * The flow sample
- * @type {Object}
- */
-module.exports.flow = {
-
-  type: 'parallel',
-  
-  task1: generateDummyTask(1),
-
-  group1: {
-
-    type: 'parallel',
-
-    task2: generateDummyTask(2),
-
-    group2: {
-
-      type: 'parallel',
-
-      group3: {
-
-        type: 'parallel',
-
-        task3: generateDummyTask(3),
-
-        group4: {
-
-          type: 'parallel',
-          
-          task4: generateDummyTask(4)
-
-        }
-
-      }
-
-    }
-
-  }
-
-};
-
-/**
  * Hints for the testing suites
  * @type {Object}
  */
 module.exports.hints = {};
-
-/**
- * Tasks indexed by their names
- * @type {Object}
- */
-module.exports.hints.tasks = {
-  '__root__': module.exports.flow,
-  group1: module.exports.flow.group1,
-  group2: module.exports.flow.group1.group2,
-  group3: module.exports.flow.group1.group2.group3,
-  group4: module.exports.flow.group1.group2.group3.group4,
-  task1: module.exports.flow.task1,
-  task2: module.exports.flow.group1.task2,
-  task3: module.exports.flow.group1.group2.group3.task3,
-  task4: module.exports.flow.group1.group2.group3.group4.task4
-};
 
 /**
  * A mapping between tasks names and runners types
@@ -151,7 +75,7 @@ module.exports.hints.context = {
  */
 module.exports.hints.timeline = [
   {},
-  {task1: true, task2: true, task3: true, task4: true}
+  {task1: 1, task2: 1, task3: 1, task4: 1}
 ];
 
 /**
@@ -165,3 +89,61 @@ module.exports.hints.debugLogs = [
   '......task3',
   '........task4'
 ];
+
+/**
+ * The flow sample
+ * @type {Object}
+ */
+module.exports.flow = {
+
+  type: 'parallel',
+  
+  task1: generators.generateDummyTask(1),
+
+  group1: {
+
+    type: 'parallel',
+
+    task2: generators.generateDummyTask(2),
+
+    group2: {
+
+      type: 'parallel',
+
+      group3: {
+
+        type: 'parallel',
+
+        task3: generators.generateDummyTask(3),
+
+        group4: {
+
+          type: 'parallel',
+          
+          task4: generators.generateDummyTask(4)
+
+        }
+
+      }
+
+    }
+
+  }
+
+};
+
+/**
+ * Tasks indexed by their names
+ * @type {Object}
+ */
+module.exports.hints.tasks = {
+  '__root__': module.exports.flow,
+  group1: module.exports.flow.group1,
+  group2: module.exports.flow.group1.group2,
+  group3: module.exports.flow.group1.group2.group3,
+  group4: module.exports.flow.group1.group2.group3.group4,
+  task1: module.exports.flow.task1,
+  task2: module.exports.flow.group1.task2,
+  task3: module.exports.flow.group1.group2.group3.task3,
+  task4: module.exports.flow.group1.group2.group3.group4.task4
+};

@@ -5,6 +5,7 @@
  */
 
 var requireDir = require('require-dir'),
+    path       = require('path'),
     _          = require('lodash');
 
 /**
@@ -17,10 +18,15 @@ var requireDir = require('require-dir'),
  * For the returned object representation check:
  * https://github.com/aseemk/requireDir
  * 
- * @param  {String} path
+ * @param  {String} dir
  * @return {Object}
  */
-module.exports = function(path) {
+module.exports = function(dir) {
+
+  var parentDir = path.dirname(module.parent.filename);
+
+  // Resolve the path to an absolute path
+  dir = path.resolve(parentDir, dir);
 
   var options = {
     recurse: true,
@@ -29,6 +35,6 @@ module.exports = function(path) {
     }
   };
 
-  return requireDir(path, options);
+  return requireDir(dir, options);
   
 };

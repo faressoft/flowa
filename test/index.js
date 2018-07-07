@@ -5,11 +5,24 @@
  */
 
 var chai       = require('chai'),
-    sinon      = require('sinon');
+    sinon      = require('sinon'),
+    _          = require('lodash');
 var plugins    = require('./plugins.js'),
-    requireDir = require('./requiredir.js'),
-    suites     = requireDir('./suites'),
-    samples    = requireDir('./samples');
+    requireDir = require('./helpers/requiredir.js'),
+    generators = require('./helpers/generators.js');
+
+// Generators helper
+global.generators = generators;
+
+// Replace symbols with strings
+global.Symbol = _.nthArg(0);
+
+// Just an empty function
+global.noop = function() {};
+
+// Testing suites and samples
+var suites  = requireDir('./suites'),
+    samples = requireDir('./samples');
 
 describe('Sample: Basic/Basic1', function(callback) {
   suites.properties(samples.basic.basic1);

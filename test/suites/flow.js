@@ -67,12 +67,12 @@ module.exports = function(sample) {
         describe('At tick ' + index, function() {
 
           // Foreach task
-          _.forIn(expectedContextState, function(value, taskName) {
+          _.forIn(expectedContextState, function(callsCounter, taskName) {
 
             it('Should execute the task "' + taskName + '"', function() {
 
               expect(actualTimeline[index]).to.have.property(taskName);
-              expect(actualTimeline[index][taskName]).to.equal(true);
+              expect(actualTimeline[index][taskName]).to.equal(callsCounter);
 
             });
             

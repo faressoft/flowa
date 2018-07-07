@@ -5,47 +5,10 @@
  */
 
 /**
- * Generate a dummy task that adds
- * a key `task${id}` = `true` into the context
- * and calls its callback on the next event loop tick
- * using `setImmediate`
- * 
- * @param  {Number}   id
- * @return {Function}
- */
-function generateDummyTask(id) {
-  
-  return function(context, callback) {
-    context['task' + id] = true;
-    setImmediate(callback);
-  };
-
-}
-
-/**
- * The flow sample
- * @type {Object}
- */
-module.exports.flow = {
-  
-  task1: generateDummyTask(1)
-
-};
-
-/**
  * Hints for the testing suites
  * @type {Object}
  */
 module.exports.hints = {};
-
-/**
- * Tasks indexed by their names
- * @type {Object}
- */
-module.exports.hints.tasks = {
-  '__root__': module.exports.flow,
-  task1: module.exports.flow.task1
-};
 
 /**
  * A mapping between tasks names and runners types
@@ -88,7 +51,7 @@ module.exports.hints.context = {
  */
 module.exports.hints.timeline = [
   {},
-  {task1: true}
+  {task1: 1}
 ];
 
 /**
@@ -99,3 +62,22 @@ module.exports.hints.timeline = [
 module.exports.hints.debugLogs = [
   'task1'
 ];
+
+/**
+ * The flow sample
+ * @type {Object}
+ */
+module.exports.flow = {
+  
+  task1: generators.generateDummyTask(1)
+
+};
+
+/**
+ * Tasks indexed by their names
+ * @type {Object}
+ */
+module.exports.hints.tasks = {
+  '__root__': module.exports.flow,
+  task1: module.exports.flow.task1
+};

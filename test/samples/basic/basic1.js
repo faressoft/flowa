@@ -5,108 +5,10 @@
  */
 
 /**
- * Generate a dummy task that adds
- * a key `task${id}` = `true` into the context
- * and calls its callback on the next event loop tick
- * using `setImmediate`
- * 
- * @param  {Number}   id
- * @return {Function}
- */
-function generateDummyTask(id) {
-  
-  return function(context, callback) {
-    context['task' + id] = true;
-    setImmediate(callback);
-  };
-
-}
-
-/**
- * The flow sample
- * @type {Object}
- */
-module.exports.flow = {
-
-  type: 'series',
-  
-  task1: generateDummyTask(1),
-
-  group1: {
-
-    type: 'parallel',
-
-    task2: generateDummyTask(2),
-
-    task3: generateDummyTask(3),
-
-    group2: {
-
-      type: 'series',
-
-      task4: generateDummyTask(4),
-
-      task5: generateDummyTask(5)
-
-    },
-
-    group3: {
-
-      task6: generateDummyTask(6),
-
-      task7: generateDummyTask(7),
-
-      group4: {
-
-        type: 'parallel',
-
-        task8: generateDummyTask(8),
-
-        task9: generateDummyTask(9)
-
-      },
-
-      task10: generateDummyTask(10)
-
-    }
-
-  },
-
-  task11: generateDummyTask(11),
-
-  task12: generateDummyTask(12)
-
-};
-
-/**
  * Hints for the testing suites
  * @type {Object}
  */
 module.exports.hints = {};
-
-/**
- * Tasks indexed by their names
- * @type {Object}
- */
-module.exports.hints.tasks = {
-  '__root__': module.exports.flow,
-  group1: module.exports.flow.group1,
-  group2: module.exports.flow.group1.group2,
-  group3: module.exports.flow.group1.group3,
-  group4: module.exports.flow.group1.group3.group4,
-  task1: module.exports.flow.task1,
-  task2: module.exports.flow.group1.task2,
-  task3: module.exports.flow.group1.task3,
-  task4: module.exports.flow.group1.group2.task4,
-  task5: module.exports.flow.group1.group2.task5,
-  task6: module.exports.flow.group1.group3.task6,
-  task7: module.exports.flow.group1.group3.task7,
-  task8: module.exports.flow.group1.group3.group4.task8,
-  task9: module.exports.flow.group1.group3.group4.task9,
-  task10: module.exports.flow.group1.group3.task10,
-  task11: module.exports.flow.task11,
-  task12: module.exports.flow.task12
-};
 
 /**
  * A mapping between tasks names and runners types
@@ -205,13 +107,13 @@ module.exports.hints.context = {
  */
 module.exports.hints.timeline = [
   {},
-  {task1: true},
-  {task2: true, task3: true, task4: true, task6: true},
-  {task5: true, task7: true},
-  {task8: true, task9: true},
-  {task10: true},
-  {task11: true},
-  {task12: true}
+  {task1: 1},
+  {task2: 1, task3: 1, task4: 1, task6: 1},
+  {task5: 1, task7: 1},
+  {task8: 1, task9: 1},
+  {task10: 1},
+  {task11: 1},
+  {task12: 1}
 ];
 
 /**
@@ -233,3 +135,83 @@ module.exports.hints.debugLogs = [
   'task11',
   'task12'
 ];
+
+/**
+ * The flow sample
+ * @type {Object}
+ */
+module.exports.flow = {
+
+  type: 'series',
+  
+  task1: generators.generateDummyTask(1),
+
+  group1: {
+
+    type: 'parallel',
+
+    task2: generators.generateDummyTask(2),
+
+    task3: generators.generateDummyTask(3),
+
+    group2: {
+
+      type: 'series',
+
+      task4: generators.generateDummyTask(4),
+
+      task5: generators.generateDummyTask(5)
+
+    },
+
+    group3: {
+
+      task6: generators.generateDummyTask(6),
+
+      task7: generators.generateDummyTask(7),
+
+      group4: {
+
+        type: 'parallel',
+
+        task8: generators.generateDummyTask(8),
+
+        task9: generators.generateDummyTask(9)
+
+      },
+
+      task10: generators.generateDummyTask(10)
+
+    }
+
+  },
+
+  task11: generators.generateDummyTask(11),
+
+  task12: generators.generateDummyTask(12)
+
+};
+
+/**
+ * Tasks indexed by their names
+ * @type {Object}
+ */
+module.exports.hints.tasks = {
+  '__root__': module.exports.flow,
+  group1: module.exports.flow.group1,
+  group2: module.exports.flow.group1.group2,
+  group3: module.exports.flow.group1.group3,
+  group4: module.exports.flow.group1.group3.group4,
+  task1: module.exports.flow.task1,
+  task2: module.exports.flow.group1.task2,
+  task3: module.exports.flow.group1.task3,
+  task4: module.exports.flow.group1.group2.task4,
+  task5: module.exports.flow.group1.group2.task5,
+  task6: module.exports.flow.group1.group3.task6,
+  task7: module.exports.flow.group1.group3.task7,
+  task8: module.exports.flow.group1.group3.group4.task8,
+  task9: module.exports.flow.group1.group3.group4.task9,
+  task10: module.exports.flow.group1.group3.task10,
+  task11: module.exports.flow.task11,
+  task12: module.exports.flow.task12
+};

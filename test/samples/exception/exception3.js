@@ -5,32 +5,6 @@
  */
 
 /**
- * Generate a dummy task that
- * calls its callback with an error
- * 
- * @return {Function}
- */
-function generateDummyErroredTask() {
-  
-  return function(context, callback) {
-    callback(module.exports.hints.error);
-  };
-
-}
-
-/**
- * The flow sample
- * @type {Object}
- */
-module.exports.flow = {
-
-  type: 'series',
-  
-  task1: generateDummyErroredTask()
-
-};
-
-/**
  * Hints for the testing suites
  * @type {Object}
  */
@@ -41,3 +15,15 @@ module.exports.hints = {};
  * @type {Object}
  */
 module.exports.hints.error = new Error('Something wrong !!!');
+
+/**
+ * The flow sample
+ * @type {Object}
+ */
+module.exports.flow = {
+
+  type: 'series',
+  
+  task1: generators.generateDummyErroredTask(module.exports.hints.error)
+
+};

@@ -5,32 +5,6 @@
  */
 
 /**
- * Generate a dummy task that
- * returns a rejected promise an error
- * 
- * @return {Function}
- */
-function generateDummyRejectedPromiseTask() {
-  
-  return function(context) {
-    return Promise.reject(module.exports.hints.error);
-  };
-
-}
-
-/**
- * The flow sample
- * @type {Object}
- */
-module.exports.flow = {
-
-  type: 'series',
-  
-  task1: generateDummyRejectedPromiseTask()
-
-};
-
-/**
  * Hints for the testing suites
  * @type {Object}
  */
@@ -41,3 +15,15 @@ module.exports.hints = {};
  * @type {Object}
  */
 module.exports.hints.error = new Error('Something wrong !!!');
+
+/**
+ * The flow sample
+ * @type {Object}
+ */
+module.exports.flow = {
+
+  type: 'series',
+  
+  task1: generators.generateDummyRejectedPromiseTask(module.exports.hints.error)
+
+};
