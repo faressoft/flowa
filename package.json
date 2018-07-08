@@ -1,6 +1,6 @@
 {
   "name": "flowa",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Flow control for Node.js",
   "main": "index.js",
   "author": "Mohammad Fares <faressoft.com@gmail.com>",
