@@ -1,6 +1,4 @@
-<p align="center">
-<img src="/logo.png?raw=true" alt="Flowa Logo"/>
-</p>
+<p align="center"><img src="/logo.png?raw=true" alt="Flowa Logo"/></p>
 
 # Flowa
 
@@ -15,6 +13,10 @@
 # Hint
 
 Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`.
+
+# Demo
+
+<p align="center"><img width="100%" src="/demo.gif?raw=true" alt="Flowa Demo"/></p>
 
 # Table of Contents  
 
