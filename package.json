@@ -1,7 +1,7 @@
 {
   "name": "flowa",
   "version": "2.0.2",
-  "description": "Flow control for Node.js",
+  "description": "Service level control flow for Node.js",
   "main": "index.js",
   "author": "Mohammad Fares <faressoft.com@gmail.com>",
   "license": "MIT",

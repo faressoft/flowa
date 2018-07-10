@@ -8,7 +8,7 @@
 [![Build Status](https://travis-ci.org/faressoft/flowa.svg?branch=master)](https://travis-ci.org/faressoft/flowa)
 [![Coverage Status](https://coveralls.io/repos/github/faressoft/flowa/badge.svg?branch=master)](https://coveralls.io/github/faressoft/flowa?branch=master)
 
-> Flow control for Node.js
+> Service level control flow for Node.js
 
 # Hint
 
@@ -40,11 +40,11 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 ## Features
 
 * Writing more readable code for complex logic.
+* Works with promises or callbacks.
 * No more callback hells.
 * Jumping between tasks.
 * Proper error handling.
-* Setting timeouts.
-* Reusability.
+* Timeouts.
 
 ## Introduction
 
