@@ -8,7 +8,7 @@
 var is       = require('is_js'),
     async    = require('async'),
     _        = require('lodash');
-var series   = require('./series'),
+var serial   = require('./serial'),
     parallel = require('./parallel');
 
 /**
@@ -41,7 +41,7 @@ function Flowa(flow, name) {
    * Runners types and their handlers
    * @type {Object}
    */
-  this._runners = {series: series, parallel: parallel};
+  this._runners = {serial: serial, parallel: parallel};
 
   /**
    * The name of the root task
@@ -71,7 +71,7 @@ function Flowa(flow, name) {
    * The default runner type
    * @type {String}
    */
-  this._defaultType = 'series';
+  this._defaultType = 'serial';
 
   /**
    * Initialize the Flowa object

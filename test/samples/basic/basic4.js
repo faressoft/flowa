@@ -15,8 +15,8 @@ module.exports.hints = {};
  * @type {Object}
  */
 module.exports.hints.tasksRunnersTypes = {
-  '__root__': 'series',
-  task1: 'series'
+  '__root__': 'serial',
+  task1: 'serial'
 };
 
 /**

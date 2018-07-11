@@ -22,7 +22,7 @@ module.exports.hints.errorMessage = 'Jumping into a task that doesn\'t belong to
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyTask(1),
 
@@ -36,7 +36,7 @@ module.exports.flow = {
 
     group2: {
 
-      type: 'series',
+      type: 'serial',
 
       task4: generators.generateJumperTask(4, 'task6'),
 

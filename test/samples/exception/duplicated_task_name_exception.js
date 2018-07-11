@@ -16,7 +16,7 @@ module.exports.hints = {};
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyTask(1),
 

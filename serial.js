@@ -1,5 +1,5 @@
 /**
- * Series Runner
+ * Serial Runner
  * Executes a compound task in sequence
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>

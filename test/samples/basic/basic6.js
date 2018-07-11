@@ -15,23 +15,23 @@ module.exports.hints = {};
  * @type {Object}
  */
 module.exports.hints.tasksRunnersTypes = {
-  '__root__': 'series',
-  group1: 'series',
+  '__root__': 'serial',
+  group1: 'serial',
   group2: 'parallel',
   group3: 'parallel',
-  group4: 'series',
-  task1: 'series',
+  group4: 'serial',
+  task1: 'serial',
   task2: 'parallel',
   task3: 'parallel',
-  task4: 'series',
-  task5: 'series',
-  task6: 'series',
-  task7: 'series',
+  task4: 'serial',
+  task5: 'serial',
+  task6: 'serial',
+  task7: 'serial',
   task8: 'parallel',
   task9: 'parallel',
-  task10: 'series',
-  task11: 'series',
-  task12: 'series'
+  task10: 'serial',
+  task11: 'serial',
+  task12: 'serial'
 };
 
 /**
@@ -142,7 +142,7 @@ module.exports.hints.debugLogs = [
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyPromiseTask(1),
 
@@ -156,7 +156,7 @@ module.exports.flow = {
 
     group2: {
 
-      type: 'series',
+      type: 'serial',
 
       task4: generators.generateDummyPromiseTask(4),
 

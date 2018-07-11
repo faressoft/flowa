@@ -1,5 +1,5 @@
 /**
- * Only series runner type (no explicit runner type is provided)
+ * Only serial runner type (no explicit runner type is provided)
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
@@ -15,23 +15,23 @@ module.exports.hints = {};
  * @type {Object}
  */
 module.exports.hints.tasksRunnersTypes = {
-  '__root__': 'series',
-  group1: 'series',
-  group2: 'series',
-  group3: 'series',
-  group4: 'series',
-  task1: 'series',
-  task2: 'series',
-  task3: 'series',
-  task4: 'series',
-  task5: 'series',
-  task6: 'series',
-  task7: 'series',
-  task8: 'series',
-  task9: 'series',
-  task10: 'series',
-  task11: 'series',
-  task12: 'series'
+  '__root__': 'serial',
+  group1: 'serial',
+  group2: 'serial',
+  group3: 'serial',
+  group4: 'serial',
+  task1: 'serial',
+  task2: 'serial',
+  task3: 'serial',
+  task4: 'serial',
+  task5: 'serial',
+  task6: 'serial',
+  task7: 'serial',
+  task8: 'serial',
+  task9: 'serial',
+  task10: 'serial',
+  task11: 'serial',
+  task12: 'serial'
 };
 
 /**

@@ -22,7 +22,7 @@ module.exports.hints.errorMessage = 'The type invalidRunner is not a valid runne
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyTask(1),
 

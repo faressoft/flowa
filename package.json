@@ -25,7 +25,7 @@
     "parallel",
     "sync",
     "serial",
-    "series",
+    "serial",
     "waterfall",
     "api",
     "restful",

@@ -1,5 +1,5 @@
 /**
- * Only series runner type
+ * Only serial runner type
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
@@ -28,7 +28,7 @@ module.exports.hints.flowExecutionTime = 8000;
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyTimerTask(1, module.exports.hints.taskExecutionTime),
 

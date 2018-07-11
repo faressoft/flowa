@@ -22,7 +22,7 @@ module.exports.hints.errorMessage = 'Jumping into an invalid task name `task!` i
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyTask(1),
 

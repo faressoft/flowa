@@ -68,7 +68,7 @@ module.exports.hints.debugLogs = [
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyPromiseTask(1),
 
@@ -82,7 +82,7 @@ module.exports.flow = {
 
     group2: {
 
-      type: 'series',
+      type: 'serial',
 
       task4: generators.generateDummyPromiseTask(4),
 

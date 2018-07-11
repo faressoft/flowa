@@ -48,7 +48,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 
 ## Introduction
 
-Each `flow` is a set of `tasks`. It starts by a `compound task` which is basically a task that groups a set of `single tasks`. Single tasks are async functions that are executed and called by passing an object called `context` to allow sharing data between tasks and a `callback` function. Each compound task's sub tasks are executed by a `runner` that can be a `series` execution (default type) or a `parallel` execution.
+Each `flow` is a set of `tasks`. It starts by a `compound task` which is basically a task that groups a set of `single tasks`. Single tasks are async functions that are executed and called by passing an object called `context` to allow sharing data between tasks and a `callback` function. Each compound task's sub tasks are executed by a `runner` that can be a `serial` execution (default type) or a `parallel` execution.
 
 ## Installation
 
@@ -67,7 +67,7 @@ var Flowa = require('flowa');
 var flowa = new Flowa({
 
   // Runner type
-  type: 'series',
+  type: 'serial',
 
   // Do task1
   task1: task1,
@@ -125,7 +125,7 @@ There are no limitations about mixing the runners types. Add `type` to the compo
 var flowa = new Flowa({
 
   // Runner type
-  type: 'series',
+  type: 'serial',
   
   // Do task1
   task1: task1,
@@ -146,7 +146,7 @@ var flowa = new Flowa({
     group2: {
 
       // Runner type
-      type: 'series',
+      type: 'serial',
 
       // Do task4
       task4: task4,
@@ -182,7 +182,7 @@ function task1(context) {
 
 ### Jumping Between Tasks
 
-You can jump forward and backward between tasks that belong to the same parent task and the runner type is `series` by passing the name of the task as the second argument to the callback function or as a resolved value if you use promises instead. You can jump into a compound task too.
+You can jump forward and backward between tasks that belong to the same parent task and the runner type is `serial` by passing the name of the task as the second argument to the callback function or as a resolved value if you use promises instead. You can jump into a compound task too.
 
 ```js
 function task1(context, callback) {
@@ -260,7 +260,7 @@ You can use the shorthand syntax for naming the tasks by their functions names.
 var flowa = new Flowa({
 
   // Runner type
-  type: 'series',
+  type: 'serial',
   
   // Shorthand format for task1: task1
   task1,
@@ -405,7 +405,7 @@ function generateGreetingMessage(context, callback) {
 module.exports = {
 
   // Runner type
-  type: 'series',
+  type: 'serial',
 
   // Increment the greeting counter
   incrementGreetingCounter: incrementGreetingCounter,

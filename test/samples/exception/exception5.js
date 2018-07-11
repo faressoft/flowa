@@ -22,7 +22,7 @@ module.exports.hints.error = new Error('Something wrong !!!');
  */
 module.exports.flow = {
 
-  type: 'series',
+  type: 'serial',
   
   task1: generators.generateDummyRejectedPromiseTask(module.exports.hints.error)
 

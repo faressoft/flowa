@@ -97,9 +97,9 @@ module.exports = function(sample) {
     
     describe('_defaultType', function() {
 
-      it('Should be the series runner type', function() {
+      it('Should be the serial runner type', function() {
 
-        expect(flowa._defaultType).to.equal('series');
+        expect(flowa._defaultType).to.equal('serial');
     
       });
 
