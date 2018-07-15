@@ -28,6 +28,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
   * [Promises](#promises)
   * [Jumping Between Tasks](#jumping-between-tasks)
   * [Error Handling](#error-handling)
+  * [Factory Method](#factory-method)
   * [ES6 Coding Style](#es6-coding-style)
   * [Use It With Express](#use-it-with-express)
 * [Best Practices](#best-practices)
@@ -58,7 +59,7 @@ npm install --save flowa
 
 ## Usage
 
-At the first you need to define our flow.
+We need to create a new Flowa object with our flow using `new Flowa(flow[, name])` or `Flowa.create(flow[, name])`.
 
 ```js
 var Flowa = require('flowa');
@@ -252,6 +253,33 @@ function checkUser(context, callback) {
 }
 ```
 
+### Factory Method
+
+Is it possible to create a new Flowa object by calling `.create()` method instead of using `new Flowa`.
+
+```js
+Flowa.create({
+
+  // Runner type
+  type: 'serial',
+
+  // Do task1
+  task1: task1,
+
+  // Do task2
+  task2: task2
+
+}).run(context).then(function(result) {
+
+  console.log(result);
+
+}).catch(function(error) {
+
+  console.error(error);
+  
+});
+```
+
 ### ES6 Coding Style
 
 You can use the shorthand syntax for naming the tasks by their functions names.
@@ -438,6 +466,8 @@ flowa.run(context, {debug: true});
 <dl>
 <dt><a href="#constructor">Flowa(flow[, name])</a></dt>
 <dd><p>To create Flowa objects</p></dd>
+<dt><a href="#create">Flowa.create(flow[, name])</a></dt>
+<dd><p>A factory method to create Flowa objects</p></dd>
 <dt><a href="#run">run(context[, options])</a> ⇒ <code>Promise</code></dt>
 <dd><p>Execute the flow</p></dd>
 </dl>
@@ -447,6 +477,17 @@ flowa.run(context, {debug: true});
 ## Flowa(flow[, name])
 
 To create Flowa objects.
+
+| Param | Type                | Description                    |
+|-------|---------------------|--------------------------------|
+| flow  | <code>Object</code> | A compound task                |
+| name  | <code>String</code> | A name for the flow (Optional) |
+
+<a name="create"></a>
+
+## Flowa.create(flow[, name])
+
+A factory method to create Flowa objects.
 
 | Param | Type                | Description                    |
 |-------|---------------------|--------------------------------|
