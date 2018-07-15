@@ -81,6 +81,23 @@ function Flowa(flow, name) {
 }
 
 /**
+ * Create a Flowa object
+ * 
+ * @param  {Object} flow
+ * @param  {String} name (Optional)
+ * @return {Flowa}
+ */
+Flowa.create = function(flow, name) {
+
+  if (typeof name == 'undefined') {
+    return new Flowa(flow);
+  }
+
+  return new Flowa(flow, name);
+
+};
+
+/**
  * Initialize the Flowa object
  *
  * - Call _setDefaultType
