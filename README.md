@@ -42,6 +42,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 
 * Writing more readable code for complex logic.
 * Works with promises or callbacks.
+* Serial or parallel execution.
 * No more callback hells.
 * Jumping between tasks.
 * Proper error handling.
