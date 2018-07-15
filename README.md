@@ -18,7 +18,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 
 <p align="center"><img width="100%" src="/demo.gif?raw=true" alt="Flowa Demo"/></p>
 
-# Table of Contents  
+# Table of Contents
 
 * [Features](#features)
 * [Introduction](#introduction)
@@ -35,6 +35,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 * [Debugging Mode](#debugging-mode)
 * [API](#api)
   * [Flowa(flow[, name])](#constructor)
+  * [Flowa.create(flow[, name])](#create)
   * [run(context, options)](#run)
 * [License](#license)
 
