@@ -28,7 +28,7 @@ describe('Sample: Basic/Basic1', function(callback) {
   suites.properties(samples.basic.basic1);
   suites.output(samples.basic.basic1);
   suites.flow(samples.basic.basic1);
-  suites.factory(samples.basic.basic1);
+  suites.staticMethods(samples.basic.basic1);
 });
 
 describe('Sample: Basic/Basic2', function(callback) {

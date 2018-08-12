@@ -24,6 +24,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 * [Introduction](#introduction)
 * [Installation](#installation)
 * [Usage](#usage)
+  * [Shorthand Method](#shorthand-method)
   * [Mixed Runners Types](#mixed-runners-types)
   * [Promises](#promises)
   * [Jumping Between Tasks](#jumping-between-tasks)
@@ -118,6 +119,33 @@ function task2(context, callback) {
 ```
 
 Just put the 3 blocks of code together in one script and they will run smoothly.
+
+### Shorthand Method
+
+Is it possible to create a flow and execute it using a single function `.run()` that belongs to the Flowa class.
+
+```js
+Flowa.run({
+
+  // Runner type
+  type: 'serial',
+
+  // Do task1
+  task1: task1,
+
+  // Do task2
+  task2: task2
+
+}).then(function(result) {
+
+  console.log(result);
+
+}).catch(function(error) {
+
+  console.error(error);
+  
+});
+```
 
 ### Mixed Runners Types
 
@@ -468,8 +496,10 @@ flowa.run(context, {debug: true});
 <dl>
 <dt><a href="#constructor">Flowa(flow[, name])</a></dt>
 <dd><p>To create Flowa objects</p></dd>
-<dt><a href="#create">Flowa.create(flow[, name])</a></dt>
+<dt><a href="#flowa-create">Flowa.create(flow[, name])</a> ⇒ <code>Flowa</code></dt>
 <dd><p>A factory method to create Flowa objects</p></dd>
+<dt><a href="#flowa-run">Flowa.run(flow[, context, options])</a> ⇒ <code>Promise</code></dt>
+<dd><p>Create a flow and execute it</p></dd>
 <dt><a href="#run">run(context[, options])</a> ⇒ <code>Promise</code></dt>
 <dd><p>Execute the flow</p></dd>
 </dl>
@@ -485,16 +515,32 @@ To create Flowa objects.
 | flow  | <code>Object</code> | A compound task                |
 | name  | <code>String</code> | A name for the flow (Optional) |
 
-<a name="create"></a>
+<a name="flowa-create"></a>
 
-## Flowa.create(flow[, name])
+## Flowa.create(flow[, name]) ⇒ <code>Flowa</code>
 
 A factory method to create Flowa objects.
+
+**Returns**: <code>Flowa</code> - a new Flowa object
 
 | Param | Type                | Description                    |
 |-------|---------------------|--------------------------------|
 | flow  | <code>Object</code> | A compound task                |
 | name  | <code>String</code> | A name for the flow (Optional) |
+
+<a name="flowa-run"></a>
+
+## Flowa.run(flow[, context, options]) ⇒ <code>Promise</code>
+
+Create a flow and execute it.
+
+**Returns**: <code>Promise</code> - resolve with the passed context object
+
+| Param   | Type                | Description                                                |
+|---------|---------------------|------------------------------------------------------------|
+| flow    | <code>Object</code> | A compound task                                            |
+| context | <code>Object</code> | A shared object between the tasks (Optional) (default: {}) |
+| options | <code>Object</code> | (Optional)                                                 |
 
 <a name="run"></a>
 
@@ -504,10 +550,10 @@ Execute the flow. The Flowa object can be defined once and executed as many as y
 
 **Returns**: <code>Promise</code> - resolve with the passed context object
 
-| Param   | Type   | Description                                                |
-|---------|--------|------------------------------------------------------------|
-| context | Object | A shared object between the tasks (Optional) (default: {}) |
-| options | Object | (Optional)                                                 |
+| Param   | Type                | Description                                                |
+|---------|---------------------|------------------------------------------------------------|
+| context | <code>Object</code> | A shared object between the tasks (Optional) (default: {}) |
+| options | <code>Object</code> | (Optional)                                                 |
 
 #### Options:
 

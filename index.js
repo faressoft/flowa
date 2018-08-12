@@ -98,6 +98,20 @@ Flowa.create = function(flow, name) {
 };
 
 /**
+ * Create a flow and execute it
+ * 
+ * @param  {Object}  flow
+ * @param  {Object}  context a shared object between the tasks (default: {})
+ * @param  {Object}  options
+ * @return {Promise}
+ */
+Flowa.run = function(flow, context, options) {
+
+  return Flowa.create(flow).run(context, options);
+
+};
+
+/**
  * Initialize the Flowa object
  *
  * - Call _setDefaultType
