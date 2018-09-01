@@ -27,6 +27,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
   * [Shorthand Method](#shorthand-method)
   * [Mixed Runners Types](#mixed-runners-types)
   * [Promises](#promises)
+  * [Sync Tasks](#sync-tasks)
   * [Jumping Between Tasks](#jumping-between-tasks)
   * [Error Handling](#error-handling)
   * [Factory Method](#factory-method)
@@ -44,6 +45,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 
 * Writing more readable code for complex logic.
 * Works with promises or callbacks.
+* Works with sync or async tasks.
 * Serial or parallel execution.
 * No more callback hells.
 * Jumping between tasks.
@@ -73,11 +75,14 @@ var flowa = new Flowa({
   // Runner type
   type: 'serial',
 
-  // Do task1
+  // A task that uses a callback
   task1: task1,
 
-  // Do task2
-  task2: task2
+  // A task that returns a promise
+  task2: task2,
+
+  // A sync task
+  task3: task3
 
 });
 ```
@@ -103,18 +108,24 @@ flowa.run(context).then(function(result) {
 And don't forget to write the code for your tasks.
 
 ```js
-// Do task1
+// A task that uses a callback
 function task1(context, callback) {
   context.task1 = 1;
   console.log('Executing task 1');
   setTimeout(callback, 500);
 }
 
-// Do task2
-function task2(context, callback) {
-  context.task2 = 1;
+// A task that returns a promise
+function task2(context) {
+  context.task2 = 2;
   console.log('Executing task 2');
-  setTimeout(callback, 500);
+  return new Promise();
+}
+
+// A sync task
+function task3(context) {
+  context.task3 = 3;
+  console.log('Executing task 3');
 }
 ```
 
@@ -207,6 +218,18 @@ function task1(context) {
     resolve();
 
   });
+
+}
+```
+
+### Sync Tasks
+
+You can use sync tasks that doesn't return a promise and doesn't take a second callback argument. The callbacks will be called internally.
+
+```js
+function task1(context) {
+
+  // Do something !!
 
 }
 ```
