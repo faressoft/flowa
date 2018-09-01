@@ -89,6 +89,27 @@ function generateDummyPromiseTask(id) {
 }
 
 /**
+ * Generate a dummy async task that adds
+ * a key `task${id}` = callsCounter into the context
+ *
+ * - The `callsCounter` is incremented for each call
+ * 
+ * @param  {Number}   id
+ * @return {Function}
+ */
+function generateDummySyncTask(id) {
+
+  var callsCounter = 1;
+  
+  return function(context) {
+
+    context['task' + id] = context['task' + id] ? context['task' + id] + 1 : 1;
+
+  };
+
+}
+
+/**
  * Generate a dummy task that adds
  * a key `task${id}` = callsCounter into the context
  * and returns a promise that gets resolved on the next event loop tick
@@ -191,6 +212,7 @@ module.exports = {
   generateDummyTask: generateDummyTask,
   generateJumperTask: generateJumperTask,
   generateDummyPromiseTask: generateDummyPromiseTask,
+  generateDummySyncTask: generateDummySyncTask,
   generateJumperPromiseTask: generateJumperPromiseTask,
   generateDummyTimerTask: generateDummyTimerTask,
   generateDummyErroredTask: generateDummyErroredTask,

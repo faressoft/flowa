@@ -61,6 +61,12 @@ describe('Sample: Basic/Basic6', function(callback) {
   suites.flow(samples.basic.basic6);
 });
 
+describe('Sample: Basic/Basic7', function(callback) {
+  suites.properties(samples.basic.basic7);
+  suites.output(samples.basic.basic7);
+  suites.flow(samples.basic.basic7);
+});
+
 describe('Sample: Jump/Jump1', function(callback) {
   suites.flow(samples.jump.jump1);
 });
