@@ -336,7 +336,7 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   // Execute the task
   try {
 
-    task = task.bind(new FlowaTask(taskName, runVariables, self));
+    task = task.bind(new FlowaTask(taskName, callback, runVariables, self));
 
     returnedValue = self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
 
@@ -501,13 +501,19 @@ Flowa.prototype.run = function(context, options) {
  * @param {Object} runVariables
  * @param {Flowa}  flowa
  */
-function FlowaTask(taskName, runVariables, flowa) {
+function FlowaTask(taskName, callback, runVariables, flowa) {
 
   /**
    * The name of the task
    * @type {String}
    */
   this.name = taskName;
+
+  /**
+   * The task's callback
+   * @type {Function}
+   */
+  this.callback = callback;
 
   /**
    * Variables needed for the current run
@@ -536,11 +542,12 @@ function FlowaTask(taskName, runVariables, flowa) {
 }
 
 /**
- * Set the execution as terminated
+ * Set the execution as terminated and call the task's callback
  */
 FlowaTask.prototype.done = function() {
 
   this._runVariables.terminated = true;
+  this.callback();
   
 };
 
