@@ -112,6 +112,30 @@ function generateDummySyncTask(id) {
 /**
  * Generate a dummy task that adds
  * a key `task${id}` = callsCounter into the context
+ * and calls its callback on the next event loop tick
+ * using `setImmediate` and terminiates the flow
+ * by calling `this.done()`
+ *
+ * - The `callsCounter` is incremented for each call
+ * 
+ * @param  {Number}   id
+ * @return {Function}
+ */
+function generateDummyTerminatingTask(id) {
+
+  var callsCounter = 1;
+  
+  return function(context, callback) {
+    context['task' + id] = context['task' + id] ? context['task' + id] + 1 : 1;
+    this.done();
+    setImmediate(callback);
+  };
+
+}
+
+/**
+ * Generate a dummy task that adds
+ * a key `task${id}` = callsCounter into the context
  * and returns a promise that gets resolved on the next event loop tick
  * using `setImmediate` with the arguments (null, jumpToTask)
  * when it's called for the first time, otherwise without jumping
@@ -213,6 +237,7 @@ module.exports = {
   generateJumperTask: generateJumperTask,
   generateDummyPromiseTask: generateDummyPromiseTask,
   generateDummySyncTask: generateDummySyncTask,
+  generateDummyTerminatingTask: generateDummyTerminatingTask,
   generateJumperPromiseTask: generateJumperPromiseTask,
   generateDummyTimerTask: generateDummyTimerTask,
   generateDummyErroredTask: generateDummyErroredTask,

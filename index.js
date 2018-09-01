@@ -302,6 +302,8 @@ Flowa.prototype._debugTask = function(taskName, debugCallback) {
  * - If the task doesn't return a promise and doesn't
  *   take a callback argument: The callback will
  *   be called manually.
+ * - If the execution is terminated the callback will
+ *   be called manually without executing the task.
  * 
  * @param {String}   taskName
  * @param {Object}   runVariables
@@ -313,6 +315,11 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   var task = self._tasks[taskName];
   var timeout = runVariables.options.taskTimeout;
   var returnedValue = null;
+
+  // Is the execution terminated
+  if (runVariables.terminated) {
+    return callback();
+  }
 
   // Debugging is on
   if (runVariables.options.debug) {
@@ -326,7 +333,10 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
 
   }
 
+  // Execute the task
   try {
+
+    task = task.bind(new FlowaTask(taskName, runVariables, self));
 
     returnedValue = self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
 
@@ -453,6 +463,7 @@ Flowa.prototype.run = function(context, options) {
   var runVariables = {
     context: typeof context == 'undefined' ? {} : context,
     options: typeof options == 'undefined' ? {} : options,
+    terminated: false,
     timedout: false
   };
 
@@ -481,6 +492,56 @@ Flowa.prototype.run = function(context, options) {
 
   });
 
+};
+
+/**
+ * A task object to be bound when calling a task
+ * 
+ * @param {String} taskName
+ * @param {Object} runVariables
+ * @param {Flowa}  flowa
+ */
+function FlowaTask(taskName, runVariables, flowa) {
+
+  /**
+   * The name of the task
+   * @type {String}
+   */
+  this.name = taskName;
+
+  /**
+   * Variables needed for the current run
+   * @type {Object}
+   */
+  this._runVariables = runVariables;
+
+  /**
+   * The task's runner type
+   * @type {String}
+   */
+  this.runnerType = flowa._tasksRunnersTypes[taskName];
+
+  /**
+   * The task's depth
+   * @type {Number}
+   */
+  depth = flowa._tasksDepths[taskName];
+
+  /**
+   * The task's parent
+   * @type {String}
+   */
+  parent = flowa._tasksParents[taskName];
+
+}
+
+/**
+ * Set the execution as terminated
+ */
+FlowaTask.prototype.done = function() {
+
+  this._runVariables.terminated = true;
+  
 };
 
 module.exports = Flowa;
