@@ -299,6 +299,9 @@ Flowa.prototype._debugTask = function(taskName, debugCallback) {
  * - If the task returns a promise: The callback will
  *   be called manually with the resolved with value
  *   or the rejected with error.
+ * - If the task doesn't return a promise and doesn't
+ *   take a callback argument: The callback will
+ *   be called manually.
  * 
  * @param {String}   taskName
  * @param {Object}   runVariables
@@ -336,7 +339,14 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   // Does it return a promise
   if (returnedValue instanceof Promise) {
 
-    returnedValue.then(callback.bind(null, null)).catch(callback.bind(null));
+    return returnedValue.then(callback.bind(null, null)).catch(callback.bind(null));
+
+  }
+
+  // Doesn't return a promise and doesn't take a callback argument
+  if (task.length < 2) {
+
+    return callback();
 
   }
 
