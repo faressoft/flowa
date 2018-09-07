@@ -347,7 +347,8 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   }
 
   // Does it return a promise
-  if (returnedValue instanceof Promise) {
+  if (typeof returnedValue == 'object' &&
+      'then' in returnedValue && 'catch' in returnedValue) {
 
     return returnedValue.then(callback.bind(null, null)).catch(callback.bind(null));
 
