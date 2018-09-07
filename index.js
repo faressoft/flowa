@@ -543,12 +543,11 @@ function FlowaTask(taskName, callback, runVariables, flowa) {
 }
 
 /**
- * Set the execution as terminated and call the task's callback
+ * Set the execution as terminated
  */
 FlowaTask.prototype.done = function() {
 
   this._runVariables.terminated = true;
-  this.callback();
   
 };
 

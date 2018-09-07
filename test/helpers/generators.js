@@ -126,8 +126,12 @@ function generateDummyTerminatingTask(id) {
   var callsCounter = 1;
   
   return function(context, callback) {
+    var self = this;
     context['task' + id] = context['task' + id] ? context['task' + id] + 1 : 1;
-    setImmediate(this.done.bind(this));
+    setImmediate(function() {
+      self.done();
+      callback();
+    });
   };
 
 }
