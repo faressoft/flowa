@@ -4,8 +4,8 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var chai   = require('chai');
-var Flowa  = require('../../index.js');
+var chai = require('chai');
+var Flowa = require('../../index.js');
 var expect = chai.expect;
 
 /**
@@ -95,11 +95,11 @@ module.exports = function(sample) {
 
     });
     
-    describe('_defaultType', function() {
+    describe('_defaultRunnerType', function() {
 
       it('Should be the serial runner type', function() {
 
-        expect(flowa._defaultType).to.equal('serial');
+        expect(flowa._defaultRunnerType).to.equal('serial');
     
       });
 

@@ -1,5 +1,5 @@
 /**
- * Flow with backward jumping
+ * Flow with backward jumping with Task.jump()
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
@@ -11,24 +11,32 @@
 module.exports.hints = {};
 
 /**
+ * Flowa options
+ * @type {Object}
+ */
+module.exports.hints.options = {
+  autoInjectResults: false
+};
+
+/**
  * The state of the context object in each event loop tick
  * @type {Array}
  */
 module.exports.hints.timeline = [
   {},
-  {task1: 1},
-  {task2: 1, task3: 1, task4: 1, task6: 1},
-  {task5: 1, task7: 1},
-  {task8: 1, task9: 1},
-  {task10: 1},
-  {task11: 1},
-  {task1: 2},
-  {task2: 2, task3: 2, task4: 2, task6: 2},
-  {task5: 2, task7: 2},
-  {task8: 2, task9: 2},
-  {task10: 2},
-  {task11: 2},
-  {task12: 1}
+  {_task1: 1},
+  {_task2: 1, _task3: 1, _task4: 1, _task6: 1},
+  {_task5: 1, _task7: 1},
+  {_task8: 1, _task9: 1},
+  {_task10: 1},
+  {_task11: 1},
+  {_task1: 2},
+  {_task2: 2, _task3: 2, _task4: 2, _task6: 2},
+  {_task5: 2, _task7: 2},
+  {_task8: 2, _task9: 2},
+  {_task10: 2},
+  {_task11: 2},
+  {_task12: 1}
 ];
 
 /**

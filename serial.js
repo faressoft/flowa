@@ -6,7 +6,8 @@
  */
 
 var async = require('async'),
-    is    = require('is_js');
+    is = require('is_js');
+var Task = require('./task');
 
 /**
  * Execute a compound task in sequence
@@ -27,6 +28,8 @@ module.exports = function(flowa, taskName, runVariables, callback) {
     
     tasks.push(function(callback) {
 
+      var flowaTask = new Task(taskName, runVariables, flowa);
+
       if (jumpToTask && jumpToTask != taskName) {
         return callback();
       }
@@ -35,29 +38,17 @@ module.exports = function(flowa, taskName, runVariables, callback) {
         jumpToTask = null;        
       }
 
-      flowa.runTask(taskName, runVariables, function(error, result) {
+      flowa.runTask(flowaTask, function(error, result) {
 
         // Something wrong
         if (error) {
           return callback(error);
         }
 
-        // No jumpToTask
-        if (typeof result == 'undefined' || is.not.string(result)) {
-          return callback();
+        // The jump method is called
+        if (flowaTask._jumpToTask) {
+          jumpToTask = flowaTask._jumpToTask;
         }
-
-        // Check exists
-        if (!flowa._isTask(result)) {
-          return callback(new Error('Jumping into an invalid task name `' + result + '` is not allowd'));
-        }
-
-        // Check same group
-        if (flowa._getTaskParent(taskName) != flowa._getTaskParent(result)) {
-          return callback(new Error('Jumping into a task that doesn\'t belong to the same parent task is not allowed'));
-        }
-
-        jumpToTask = result;
 
         callback();
         

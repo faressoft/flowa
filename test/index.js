@@ -4,10 +4,10 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var chai       = require('chai'),
-    sinon      = require('sinon'),
-    _          = require('lodash');
-var plugins    = require('./plugins.js'),
+var chai = require('chai'),
+    sinon = require('sinon'),
+    _ = require('lodash');
+var plugins = require('./plugins.js'),
     requireDir = require('./helpers/requiredir.js'),
     generators = require('./helpers/generators.js');
 
@@ -21,7 +21,7 @@ global.Symbol = _.nthArg(0);
 global.noop = function() {};
 
 // Testing suites and samples
-var suites  = requireDir('./suites'),
+var suites = requireDir('./suites'),
     samples = requireDir('./samples');
 
 describe('Sample: Basic/Basic1', function(callback) {
@@ -67,26 +67,21 @@ describe('Sample: Basic/Basic7', function(callback) {
   suites.flow(samples.basic.basic7);
 });
 
-describe('Sample: Basic/Basic8', function(callback) {
-  suites.properties(samples.basic.basic8);
-  suites.output(samples.basic.basic8);
-  suites.flow(samples.basic.basic8);
+describe('Sample: AutoInjectResults/AutoInjectResults1', function(callback) {
+  suites.flow(samples.autoInjectResults.autoInjectResults1);
+  suites.output(samples.autoInjectResults.autoInjectResults1);
 });
 
 describe('Sample: Jump/Jump1', function(callback) {
   suites.flow(samples.jump.jump1);
 });
 
+describe('Sample: Done/Done1', function(callback) {
+  suites.flow(samples.done.done1);
+});
+
 describe('Sample: Jump/Jump2', function(callback) {
   suites.flow(samples.jump.jump2);
-});
-
-describe('Sample: Jump/Jump3', function(callback) {
-  suites.flow(samples.jump.jump3);
-});
-
-describe('Sample: Jump/Jump4', function(callback) {
-  suites.flow(samples.jump.jump4);
 });
 
 describe('Sample: Timeout/Timeout1', function(callback) {

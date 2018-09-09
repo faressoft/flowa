@@ -4,12 +4,12 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var chai        = require('chai'),
+var chai = require('chai'),
     TicksTracer = require('ticks-tracer'),
-    sinon       = require('sinon'),
-    _           = require('lodash');
-var Flowa       = require('../../index.js');
-var expect      = chai.expect;
+    sinon = require('sinon'),
+    _ = require('lodash');
+var Flowa = require('../../index.js');
+var expect = chai.expect;
 
 /**
  * Run tests
@@ -24,13 +24,17 @@ module.exports = function(sample) {
   var ticksTracer = null;
   var debugCallback = sinon.spy();
 
+  // The context status at each tick
+  var actualTimeline = [];
+
   var runOptions = {
     debug: true,
     debugCallback: debugCallback
   };
 
-  // The context status at each tick
-  var actualTimeline = [];
+  if (typeof sample.hints.options != 'undefined') {
+    _.defaults(runOptions, sample.hints.options);
+  }
 
   describe('Flow', function() {
 

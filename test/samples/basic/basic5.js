@@ -11,6 +11,14 @@
 module.exports.hints = {};
 
 /**
+ * Flowa options
+ * @type {Object}
+ */
+module.exports.hints.options = {
+  autoInjectResults: false
+};
+
+/**
  * A mapping between tasks names and runners types
  * @type {Object}
  */
@@ -63,10 +71,10 @@ module.exports.hints.tasksParents = {
  * @type {Object}
  */
 module.exports.hints.context = {
-  task1: true,
-  task2: true,
-  task3: true,
-  task4: true
+  _task1: 1,
+  _task2: 1,
+  _task3: 1,
+  _task4: 1
 };
 
 /**
@@ -75,7 +83,7 @@ module.exports.hints.context = {
  */
 module.exports.hints.timeline = [
   {},
-  {task1: 1, task2: 1, task3: 1, task4: 1}
+  {_task1: 1, _task2: 1, _task3: 1, _task4: 1}
 ];
 
 /**

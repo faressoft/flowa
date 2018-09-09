@@ -5,10 +5,11 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var is       = require('is_js'),
-    async    = require('async'),
-    _        = require('lodash');
-var serial   = require('./serial'),
+var is = require('is_js'),
+    async = require('async'),
+    _ = require('lodash');
+var Task = require('./task'),
+    serial = require('./serial'),
     parallel = require('./parallel');
 
 /**
@@ -71,7 +72,7 @@ function Flowa(flow, name) {
    * The default runner type
    * @type {String}
    */
-  this._defaultType = 'serial';
+  this._defaultRunnerType = 'serial';
 
   /**
    * Initialize the Flowa object
@@ -140,7 +141,7 @@ Flowa.prototype._setDefaultType = function(task) {
 
   // The type is not defined
   if (typeof task.type == 'undefined') {
-    task.type = this._defaultType;
+    task.type = this._defaultRunnerType;
   }
 
   // Foreach task
@@ -266,6 +267,18 @@ Flowa.prototype.forEachTask = function(taskName, callback) {
 };
 
 /**
+ * Get a task by its name
+ * 
+ * @param  {String}          taskName
+ * @return {Function|Object}
+ */
+Flowa.prototype._getTask = function(taskName) {
+  
+  return this._tasks[taskName];
+
+};
+
+/**
  * Debug a specific task
  *
  * Calls the `debugCallback` with one string
@@ -301,24 +314,40 @@ Flowa.prototype._debugTask = function(taskName, debugCallback) {
  *   or the rejected with error.
  * - If the task doesn't return a promise and doesn't
  *   take a callback argument: The callback will
- *   be called manually.
+ *   be called manually with the returned value as a result.
  * - If the execution is terminated the callback will
  *   be called manually without executing the task.
+ * - Inject the result of the task in the context with
+ *   a key equal to the task's name if
+ *   `runVariables.options.autoInjectResults` = `true`
  * 
- * @param {String}   taskName
- * @param {Object}   runVariables
- * @param {Function} callback
+ * @param {Task} flowaTask
+ * @param {Function}  callback
  */
-Flowa.prototype.runTask = function(taskName, runVariables, callback) {
+Flowa.prototype.runTask = function(flowaTask, callback) {
 
   var self = this;
-  var task = self._tasks[taskName];
+  var runVariables = flowaTask._runVariables;
   var timeout = runVariables.options.taskTimeout;
+  var taskName = flowaTask.name;
   var returnedValue = null;
 
   // Is the execution terminated
   if (runVariables.terminated) {
-    return callback();
+    return callback(null);
+  }
+
+  // Automatically inject the result of the single tasks
+  // into the context object
+  if (runVariables.options.autoInjectResults && flowaTask._isSingleTask) {
+
+    var runTaskCallback = callback;
+
+    callback = function(error, result) {
+      runVariables.context[taskName] = result;
+      runTaskCallback(error, result);
+    };
+
   }
 
   // Debugging is on
@@ -327,18 +356,14 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   }
 
   // Is a compound task
-  if (self._isCompoundTask(taskName)) {
-
-    return self._runners[task.type](self, taskName, runVariables, callback);
-
+  if (!flowaTask._isSingleTask) {
+    return self._runners[flowaTask._task.type](self, taskName, runVariables, callback);
   }
 
   // Execute the task
   try {
 
-    task = task.bind(new FlowaTask(taskName, callback, runVariables, self));
-
-    returnedValue = self._timeout(task, timeout, runVariables, taskName)(runVariables.context, callback);
+    returnedValue = self._timeout(flowaTask._task.bind(flowaTask), timeout, runVariables, taskName)(runVariables.context, callback);
 
   } catch (error) {
 
@@ -354,9 +379,9 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
   }
 
   // Doesn't return a promise and doesn't take a callback argument
-  if (task.length < 2) {
+  if (flowaTask._task.length < 2) {
 
-    return callback();
+    return callback(null, returnedValue);
 
   }
 
@@ -471,6 +496,7 @@ Flowa.prototype.run = function(context, options) {
   _.defaults(runVariables.options, {
     timeout: null,
     taskTimeout: null,
+    autoInjectResults: true, // Inject the result of each task into the context
     debug: false,
     debugCallback: console.log
   });
@@ -479,8 +505,9 @@ Flowa.prototype.run = function(context, options) {
 
     var timeout = runVariables.options.timeout;
     var runTask = self._timeout(self.runTask.bind(self), timeout, runVariables);
+    var flowaTask = new Task(self._rootName, runVariables, self)
 
-    runTask(self._rootName, runVariables, function(error, result) {
+    runTask(flowaTask, function(error, result) {
 
       if (error) {
         return reject(error);
@@ -492,62 +519,6 @@ Flowa.prototype.run = function(context, options) {
 
   });
 
-};
-
-/**
- * A task object to be bound when calling a task
- * 
- * @param {String} taskName
- * @param {Object} runVariables
- * @param {Flowa}  flowa
- */
-function FlowaTask(taskName, callback, runVariables, flowa) {
-
-  /**
-   * The name of the task
-   * @type {String}
-   */
-  this.name = taskName;
-
-  /**
-   * The task's callback
-   * @type {Function}
-   */
-  this.callback = callback;
-
-  /**
-   * Variables needed for the current run
-   * @type {Object}
-   */
-  this._runVariables = runVariables;
-
-  /**
-   * The task's runner type
-   * @type {String}
-   */
-  this.runnerType = flowa._tasksRunnersTypes[taskName];
-
-  /**
-   * The task's depth
-   * @type {Number}
-   */
-  depth = flowa._tasksDepths[taskName];
-
-  /**
-   * The task's parent
-   * @type {String}
-   */
-  parent = flowa._tasksParents[taskName];
-
-}
-
-/**
- * Set the execution as terminated
- */
-FlowaTask.prototype.done = function() {
-
-  this._runVariables.terminated = true;
-  
 };
 
 module.exports = Flowa;

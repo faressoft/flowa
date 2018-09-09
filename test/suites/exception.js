@@ -4,9 +4,9 @@
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
 
-var chai   = require('chai'),
-    sinon  = require('sinon');
-var Flowa  = require('../../index.js');
+var chai = require('chai'),
+    sinon = require('sinon');
+var Flowa = require('../../index.js');
 var expect = chai.expect;
 
 /**

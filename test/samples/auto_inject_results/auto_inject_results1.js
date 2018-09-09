@@ -1,5 +1,5 @@
 /**
- * Flow with forward jumping with Task.jump()
+ * Flow with options.autoInjectResults = true
  * 
  * @author Mohammad Fares <faressoft.com@gmail.com>
  */
@@ -15,7 +15,38 @@ module.exports.hints = {};
  * @type {Object}
  */
 module.exports.hints.options = {
-  autoInjectResults: false
+  autoInjectResults: true
+};
+
+/**
+ * The context
+ * @type {Object}
+ */
+module.exports.hints.context = {
+  task1: 'result1',
+  task2: 'result2',
+  task3: 'result3',
+  task4: 'result4',
+  task5: 'result5',
+  task6: 'result6',
+  task7: 'result7',
+  task8: 'result8',
+  task9: 'result9',
+  task10: 'result10',
+  task11: 'result11',
+  task12: 'result12',
+  _task1: 1,
+  _task2: 1,
+  _task3: 1,
+  _task4: 1,
+  _task5: 1,
+  _task6: 1,
+  _task7: 1,
+  _task8: 1,
+  _task9: 1,
+  _task10: 1,
+  _task11: 1,
+  _task12: 1
 };
 
 /**
@@ -25,8 +56,12 @@ module.exports.hints.options = {
 module.exports.hints.timeline = [
   {},
   {_task1: 1},
-  {_task11: 1},
-  {_task12: 1}
+  {task1: 'result1', _task2: 1, _task3: 1, _task4: 1, _task6: 1},
+  {task2: 'result2', task3: 'result3', task4: 'result4', task6: 'result6', _task5: 1, _task7: 1},
+  {task5: 'result5', task7: 'result7', _task8: 1, _task9: 1},
+  {task8: 'result8', task9: 'result9', _task10: 1},
+  {task10: 'result10', _task11: 1},
+  {task11: 'result11', task12: 'result12', _task12: 1}
 ];
 
 /**
@@ -36,6 +71,15 @@ module.exports.hints.timeline = [
  */
 module.exports.hints.debugLogs = [
   'task1',
+  '..task2',
+  '..task3',
+  '....task4',
+  '....task6',
+  '....task5',
+  '....task7',
+  '......task8',
+  '......task9',
+  '....task10',
   'task11',
   'task12'
 ];
@@ -48,7 +92,7 @@ module.exports.flow = {
 
   type: 'serial',
   
-  task1: generators.generateJumperTask(1, 'task11'),
+  task1: generators.generateDummyTask(1),
 
   group1: {
 

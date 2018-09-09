@@ -28,6 +28,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
   * [Mixed Runners Types](#mixed-runners-types)
   * [Promises](#promises)
   * [Sync Tasks](#sync-tasks)
+  * [Terminating The Flow](#terminating-the-flow)
   * [Jumping Between Tasks](#jumping-between-tasks)
   * [Error Handling](#error-handling)
   * [Factory Method](#factory-method)
@@ -110,22 +111,27 @@ And don't forget to write the code for your tasks.
 ```js
 // A task that uses a callback
 function task1(context, callback) {
-  context.task1 = 1;
+
   console.log('Executing task 1');
-  setTimeout(callback, 500);
+  setTimeout(callback.bind(null, null, 'DummyValue1'), 500);
+
 }
 
 // A task that returns a promise
 function task2(context) {
-  context.task2 = 2;
+
   console.log('Executing task 2');
-  return new Promise();
+  context.extraDummyValue2 = 'extraDummyValue2';
+  return Promise.resolve('DummyValue2');
+
 }
 
 // A sync task
 function task3(context) {
-  context.task3 = 3;
+
   console.log('Executing task 3');
+  return 'DummyValue3';
+
 }
 ```
 
@@ -234,26 +240,28 @@ function task1(context) {
 }
 ```
 
-### Jumping Between Tasks
+### Terminating The Flow
 
-You can jump forward and backward between tasks that belong to the same parent task and the runner type is `serial` by passing the name of the task as the second argument to the callback function or as a resolved value if you use promises instead. You can jump into a compound task too.
+You can terminate the flow (skip executing the remaining tasks) by calling the `done` method.
 
 ```js
 function task1(context, callback) {
-  callback(null, 'task6');
+
+  this.done();
+  callback();
+
 }
 ```
 
-Or with promises
+### Jumping Between Tasks
+
+You can jump forward and backward between tasks that belong to the same parent task and the runner type is `serial` by calling the `jump` method with the task name as first argument to jump into it after executing the current task completely. You can jump into a compound task too.
 
 ```js
-function task1(context) {
+function task1(context, callback) {
 
-  return new Promise(function(resolve, reject) {
-
-    resolve('task6');
-
-  });
+  this.jump('task6');
+  callback();
 
 }
 ```
@@ -284,7 +292,8 @@ function task2(context, callback) {
   }
 
   // Retry
-  callback(null, 'task1');
+  this.jump('task1');
+  callback();
   
 }
 ```
@@ -523,9 +532,17 @@ flowa.run(context, {debug: true});
 <dd><p>A factory method to create Flowa objects</p></dd>
 <dt><a href="#flowa-run">Flowa.run(flow[, context, options])</a> ⇒ <code>Promise</code></dt>
 <dd><p>Create a flow and execute it</p></dd>
-<dt><a href="#run">run(context[, options])</a> ⇒ <code>Promise</code></dt>
+<dt><a href="#flowa-instance-run">flowa.run(context[, options])</a> ⇒ <code>Promise</code></dt>
 <dd><p>Execute the flow</p></dd>
+<dt><a href="#task-done">task.done()</a></dt>
+<dd><p>Skip the remaining tasks</p></dd>
+<dt><a href="#task-jump">task.jump(taskName)</a></dt>
+<dd><p>Jump into another task under the same parent after executing the current task</p></dd>
 </dl>
+
+### Note
+
+> A new instance from the class `Task` is created for each execution for each task.
 
 <a name="constructor"></a>
 
@@ -565,9 +582,9 @@ Create a flow and execute it.
 | context | <code>Object</code> | A shared object between the tasks (Optional) (default: {}) |
 | options | <code>Object</code> | (Optional)                                                 |
 
-<a name="run"></a>
+<a name="flowa-instance-run"></a>
 
-## run(context, options) ⇒ <code>Promise</code>
+## flowa.run(context, options) ⇒ <code>Promise</code>
 
 Execute the flow. The Flowa object can be defined once and executed as many as you need.
 
@@ -582,8 +599,25 @@ Execute the flow. The Flowa object can be defined once and executed as many as y
 
 * **timeout**: a timeout for the flow in milliseconds. The promise will be rejected with an error object that has (code: `ETIMEDOUT`) if the timeout is exeeded (type: `Number`).
 * **taskTimeout**: a timeout for the single tasks in milliseconds. The promise will be rejected with an error object that has (code: `ETIMEDOUT`) if the timeout is exeeded (type: `Number`).
-* **debug**: log the tasks' names in realtime (type: `Boolean`).
+* **autoInjectResults**: Inject the result of each task into the context automatically (type: `Boolean`) (default: `true`).
+* **debug**: log the tasks' names in realtime (type: `Boolean`) (default: `false`).
 * **debugCallback**: the debug logging function (type: `Boolean`) (default: `console.log`).
+
+<a name="task-done"></a>
+
+## task.done()
+
+Skip the remaining tasks. Check [Terminating The Flow](#terminating-the-flow).
+
+<a name="task-jump"></a>
+
+## task.jump(taskName)
+
+Jump into another task under the same parent after executing the current task. Check [Jumping Between Tasks](#jumping-between-tasks).
+
+| Param    | Type                | Description                    |
+|----------|---------------------|--------------------------------|
+| taskName | <code>String</code> | The name of the sibling task   |
 
 # License
 

@@ -6,6 +6,7 @@
  */
 
 var async = require('async');
+var Task = require('./task');
 
 /**
  * Execute a compound task in parallel
@@ -24,7 +25,8 @@ module.exports = function(flowa, taskName, runVariables, callback) {
 
     tasks.push(function(callback) {
 
-      flowa.runTask(taskName, runVariables, callback);
+      var flowaTask = new Task(taskName, runVariables, flowa);
+      flowa.runTask(flowaTask, callback);
       
     });
 
