@@ -344,8 +344,13 @@ Flowa.prototype.runTask = function(flowaTask, callback) {
     var runTaskCallback = callback;
 
     callback = function(error, result) {
-      runVariables.context[taskName] = result;
+
+      if (typeof result != 'undefined') {
+        runVariables.context[taskName] = result;
+      }
+
       runTaskCallback(error, result);
+
     };
 
   }
