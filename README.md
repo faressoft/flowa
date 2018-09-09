@@ -226,7 +226,7 @@ function task1(context) {
 
 ### Sync Tasks
 
-You can use sync tasks that doesn't return a promise and doesn't take a second callback argument. The callbacks will be called internally.
+You can use sync tasks that doesn't return a promise and doesn't take a second callback argument.
 
 ```js
 function task1(context) {
