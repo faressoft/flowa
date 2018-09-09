@@ -342,7 +342,7 @@ Flowa.prototype.runTask = function(taskName, runVariables, callback) {
 
   } catch (error) {
 
-    callback(error);
+    return callback(error);
 
   }
 
