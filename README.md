@@ -55,7 +55,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 
 ## Introduction
 
-Each `flow` is a set of `tasks`. It starts by a `compound task` which is basically a task that groups a set of `single tasks`. Single tasks are async functions that are executed and called by passing an object called `context` to allow sharing data between tasks and a `callback` function. Each compound task's sub tasks are executed by a `runner` that can be a `serial` execution (default type) or a `parallel` execution.
+Each `flow` is a set of `tasks`. It starts by a `compound task` which is basically a task that groups a set of `single tasks`. Single tasks are either async or async functions that are executed and called by passing an object called `context` to allow sharing data between tasks and an optional `callback` function for async tasks. Each compound task's sub tasks are executed by a `runner` that can be a `serial` execution (default type) or a `parallel` execution.
 
 ## Installation
 
@@ -65,7 +65,7 @@ npm install --save flowa
 
 ## Usage
 
-We need to create a new Flowa object with our flow using `new Flowa(flow[, name])` or `Flowa.create(flow[, name])`.
+We need to create a new Flowa object with our flow using `new Flowa(flow[, name])`, `Flowa.create(flow[, name])`, or just use the [Shorthand Method](#shorthand-method) it is much easier and recommended if you are not planning to execute the same flow again and again.
 
 ```js
 var Flowa = require('flowa');
@@ -77,13 +77,13 @@ var flowa = new Flowa({
   type: 'serial',
 
   // A task that uses a callback
-  task1: task1,
+  asyncTaskWithCallback: asyncTaskWithCallback,
 
   // A task that returns a promise
-  task2: task2,
+  asyncTaskWithPromise: asyncTaskWithPromise,
 
   // A sync task
-  task3: task3
+  syncTask: syncTask
 
 });
 ```
@@ -110,26 +110,22 @@ And don't forget to write the code for your tasks.
 
 ```js
 // A task that uses a callback
-function task1(context, callback) {
+function asyncTaskWithCallback(context, callback) {
 
-  console.log('Executing task 1');
   setTimeout(callback.bind(null, null, 'DummyValue1'), 500);
 
 }
 
 // A task that returns a promise
-function task2(context) {
+function asyncTaskWithPromise(context) {
 
-  console.log('Executing task 2');
-  context.extraDummyValue2 = 'extraDummyValue2';
   return Promise.resolve('DummyValue2');
 
 }
 
 // A sync task
-function task3(context) {
+function syncTask(context) {
 
-  console.log('Executing task 3');
   return 'DummyValue3';
 
 }
