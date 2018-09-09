@@ -460,31 +460,25 @@ var counter = 0;
 /**
  * Increment the greeting counter
  * 
- * @param {Object}   context
- * @param {Function} callback
+ * @param {Object} context
  */
-function incrementGreetingCounter(context, callback) {
+function incrementGreetingCounter(context) {
 
   context.counterValue = ++counter;
-
-  callback();
 
 }
 
 /**
  * Generate a greeting message
  * 
- * @param {Object}   context
- * @param {Function} callback
+ * @param {Object} context
  */
-function generateGreetingMessage(context, callback) {
+function generateGreetingMessage(context) {
 
   context.res.send({
     message: 'Hello ' + context.req.params.name,
     counter: context.counterValue
   });
-
-  callback();
 
 }
 
