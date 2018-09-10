@@ -10,6 +10,8 @@
 
 > Service level control flow for Node.js
 
+One execution flow that runs mixed sync and async functions that use either promises or callbacks running in parallel, sequentially or mixed. 🔥 **It can't be easier and more readable !**
+
 # Hint
 
 Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`.
@@ -55,7 +57,7 @@ Check the [suggested way](#use-it-with-express) to use `Flowa` with `Express.js`
 
 ## Introduction
 
-Each `flow` is a set of `tasks`. It starts by a `compound task` which is basically a task that groups a set of `single tasks`. Single tasks are either async or async functions that are executed and called by passing an object called `context` to allow sharing data between tasks and an optional `callback` function for async tasks. Each compound task's sub tasks are executed by a `runner` that can be a `serial` execution (default type) or a `parallel` execution.
+Each `flow` is a set of `tasks`. It starts by a `compound task` which is basically a task that groups a set of `single` or other `compound` tasks. Single tasks are either async or sync functions that are executed and called by passing an object called `context` to allow sharing data between tasks and an optional `callback` function for async tasks that use callbacks instead of promises. Each compound task's sub tasks are executed by a `runner` that can be a `serial` execution (default type) or a `parallel` execution.
 
 ## Installation
 
