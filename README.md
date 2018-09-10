@@ -10,7 +10,7 @@
 
 > Service level control flow for Node.js
 
-One execution flow that runs mixed sync and async functions that use either promises or callbacks running in parallel, sequentially or mixed. 🔥 **It can't be easier and more readable !**
+One execution flow that runs mixed sync and async functions that uses either promises or callbacks running in parallel, sequentially or mixed. 🔥 **It can't be easier and more readable !**
 
 # Hint
 
