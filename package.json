@@ -1,6 +1,6 @@
 {
   "name": "flowa",
-  "version": "4.0.1",
+  "version": "4.0.2",
   "description": "Service level control flow for Node.js",
   "main": "index.js",
   "author": "Mohammad Fares <faressoft.com@gmail.com>",
